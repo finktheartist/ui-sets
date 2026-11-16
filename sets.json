@@ -1,0 +1,115 @@
+{
+  "sets": [
+    {
+      "id": "rubber-hose-ui",
+      "name": "Rubber Hose UI",
+      "tagline": "Ordinary controls as a 1930s rubber-hose cartoon. Every control is a character: the button gets bopped, the slider is a trombone, the toast is a toaster.",
+      "count": 11,
+      "made": "Painted bodies, limbs drawn in code",
+      "url": "https://rubber-hose-ui.vercel.app",
+      "repo": "finktheartist/rubber-hose-ui",
+      "status": "soon",
+      "paper": "#ecd7ac",
+      "demos": [
+        {
+          "name": "Button",
+          "path": "button/",
+          "height": 330
+        },
+        {
+          "name": "Toggle",
+          "path": "toggle/",
+          "height": 330
+        },
+        {
+          "name": "Checkbox",
+          "path": "checkbox/",
+          "height": 330
+        },
+        {
+          "name": "Slider",
+          "path": "slider/",
+          "height": 330
+        }
+      ]
+    },
+    {
+      "id": "sakuga-vfx",
+      "name": "Sakuga VFX",
+      "tagline": "Ordinary controls that react like anime. Plain at rest; use one and it squashes on springs and throws smoke, impact bursts and manga sound-effect lettering.",
+      "count": 11,
+      "made": "Effects drawn in code on one canvas",
+      "url": "https://sakuga-vfx.vercel.app",
+      "repo": "finktheartist/sakuga-vfx",
+      "status": "live",
+      "paper": "#ffffff",
+      "demos": [
+        {
+          "name": "Button",
+          "path": "button/",
+          "height": 330
+        },
+        {
+          "name": "Toggle",
+          "path": "toggle/",
+          "height": 330
+        },
+        {
+          "name": "Checkbox",
+          "path": "checkbox/",
+          "height": 330
+        },
+        {
+          "name": "Slider",
+          "path": "slider/",
+          "height": 330
+        }
+      ]
+    },
+    {
+      "id": "pixel-worlds",
+      "name": "Pixel Worlds",
+      "tagline": "Ordinary controls with a small living pixel-art scene inside them. The control's value drives the scene: hold delete and a dragon breathes fire across the button.",
+      "count": 6,
+      "made": "Every pixel painted in code",
+      "url": "https://pixel-worlds.vercel.app",
+      "repo": "finktheartist/pixel-worlds",
+      "status": "live",
+      "paper": "#efe6d2",
+      "demos": [
+        {
+          "name": "Hoard",
+          "path": "hoard/",
+          "height": [
+            164,
+            250
+          ]
+        },
+        {
+          "name": "Raven",
+          "path": "raven/",
+          "height": [
+            150,
+            150
+          ]
+        },
+        {
+          "name": "Round",
+          "path": "round/",
+          "height": [
+            270,
+            150
+          ]
+        },
+        {
+          "name": "Sigil",
+          "path": "sigil/",
+          "height": [
+            400,
+            400
+          ]
+        }
+      ]
+    }
+  ]
+}

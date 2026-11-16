@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>UI sets by Justin Finkelman</title>
+<meta name="description" content="Themed sets of drop-in web components. Every control is a single file with no dependencies.">
+<style>
+  /* One page that lists every component set. The page is plain on purpose (greys and hairlines, no accent colour) so the
+     sets are the only loud things on it. The sets come from sets.json; adding one is adding an entry there and a poster. */
+  :root { color-scheme: light dark; --page: #fafaf9; --card: #ffffff; --text: #17171a; --mute: #6b6b74; --line: #e3e3e6; --chip: #f1f1f2; }
+  @media (prefers-color-scheme: dark) { :root { --page: #0e0e10; --card: #151518; --text: #f1f1f3; --mute: #9a9aa5; --line: #29292e; --chip: #1e1e22; } }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; overflow-x: clip; background: var(--page); }
+  body { margin: 0; color: var(--text); background: var(--page); font: 400 15px/1.5 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
+  a { color: inherit; } button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--text); outline-offset: 3px; border-radius: 6px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 20px 96px; }
+  header { max-width: 640px; }
+  h1 { margin: 0; font-size: 30px; line-height: 1.15; font-weight: 650; letter-spacing: -.02em; }
+  .lede { margin: 12px 0 0; color: var(--mute); font-size: 17px; line-height: 1.5; }
+  .by { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; font-size: 14px; }
+  .by a { text-decoration: none; border-bottom: 1px solid var(--line); } .by a:hover { border-color: var(--text); }
+  .sets { display: grid; gap: 28px; margin-top: 48px; }
+  .set { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border: 1px solid var(--line); border-radius: 16px; background: var(--card); overflow: hidden; }
+  .view { position: relative; display: grid; min-width: 0; border-right: 1px solid var(--line); background: var(--paper, var(--chip)); }
+  .view img { display: block; width: 100%; height: 100%; min-height: 300px; object-fit: cover; object-position: top center; }
+  .view iframe { display: block; width: 100%; border: 0; background: var(--paper, #fff); }
+  .view .live { align-self: center; padding: 14px 0; }
+  .info { display: flex; flex-direction: column; min-width: 0; padding: 26px 26px 22px; }
+  .info h2 { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 650; letter-spacing: -.015em; }
+  .tag { margin: 10px 0 0; color: var(--mute); }
+  .meta { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--mute); }
+  .meta li + li::before { content: "·"; margin-right: 14px; }
+  .try { margin: 20px 0 0; }
+  .try p, .install p { margin: 0 0 7px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+  .seg { display: flex; flex-wrap: wrap; gap: 6px; }
+  .seg button, .btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: none; font-size: 13px; font-weight: 550; text-decoration: none; cursor: pointer; white-space: nowrap; }
+  .seg button:hover, .btn:hover { border-color: var(--text); }
+  .seg button[aria-pressed=true] { background: var(--text); border-color: var(--text); color: var(--card); }
+  .install { margin: 20px 0 0; }
+  .cmd { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 4px 4px 4px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--chip); }
+  .cmd code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+  .cmd button { flex: none; height: 28px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--card); font-size: 12.5px; font-weight: 550; cursor: pointer; }
+  .cmd button:hover { border-color: var(--text); }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin: auto 0 0; padding-top: 22px; }
+  .btn.main { background: var(--text); border-color: var(--text); color: var(--card); }
+  .soon { display: inline-block; margin-left: 8px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 11.5px; font-weight: 550; letter-spacing: .02em; color: var(--mute); vertical-align: 3px; }
+  .foot { margin: 56px 0 0; color: var(--mute); font-size: 13.5px; max-width: 640px; }
+  .foot code { padding: 1px 5px; border-radius: 5px; background: var(--chip); font-size: 12.5px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  @media (max-width: 820px) { .set { grid-template-columns: 1fr; } .view { border-right: 0; border-bottom: 1px solid var(--line); } .view img { min-height: 0; aspect-ratio: 16 / 10; } .wrap { padding-top: 36px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>UI sets</h1>
+    <p class="lede">Themed sets of ordinary web controls, each drawn a different way. Every control is a single file that defines a custom element: no dependencies, no build step, and a real control underneath.</p>
+    <p class="by"><span>By Justin Finkelman</span><a href="https://x.com/crtvTeknologist" target="_blank" rel="noopener">@crtvTeknologist on X</a><a href="https://github.com/finktheartist" target="_blank" rel="noopener">GitHub</a></p>
+  </header>
+  <main class="sets" id="sets" aria-live="polite"></main>
+  <p class="foot">Install any control with the shadcn CLI, or copy its file and load it with a plain script tag. Each set also ships the workflow it was made by as a skill for a coding agent, and an <code>llms.txt</code>.</p>
+</div>
+<script>
+// The sets come from sets.json. With ?local the links and the live demos point at copies of the sets under _sets/ on this
+// server (see the README), which is how the page is previewed before a set is deployed.
+const LOCAL = new URLSearchParams(location.search).has('local'), narrow = matchMedia('(max-width: 520px)');
+// a demo's height is one number, or two: for a wide frame and for a phone-width one
+const tall = (d) => (Array.isArray(d.height) ? d.height[narrow.matches ? 1 : 0] : +d.height || 300);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const base = (s) => (LOCAL ? `_sets/${s.id}/` : s.url.replace(/\/?$/, '/'));
+
+fetch('sets.json').then((r) => r.json()).then(({ sets }) => {
+  const root = document.getElementById('sets');
+  for (const s of sets) {
+    const live = LOCAL || s.status === 'live', first = s.demos?.[0], cmd = `npx shadcn add ${s.repo}/${first ? first.path.replace(/\/$/, '') : 'NAME'}`;
+    const el = document.createElement('article'); el.className = 'set'; el.id = s.id; if (s.paper) el.style.setProperty('--paper', s.paper);
+    el.innerHTML = `
+      <div class="view"><img src="posters/${esc(s.id)}.jpg" alt="The ${esc(s.name)} gallery" loading="lazy" width="1200" height="750"></div>
+      <div class="info">
+        <h2>${esc(s.name)}${live ? '' : '<span class="soon">Coming soon</span>'}</h2>
+        <p class="tag">${esc(s.tagline)}</p>
+        <ul class="meta"><li>${s.count} controls</li><li>${esc(s.made)}</li><li>MIT</li></ul>
+        ${live && s.demos?.length ? `<div class="try"><p id="try-${esc(s.id)}">Try one here</p><div class="seg" role="group" aria-labelledby="try-${esc(s.id)}">${s.demos.map((d, i) => `<button type="button" aria-pressed="false" data-i="${i}">${esc(d.name)}</button>`).join('')}</div></div>` : ''}
+        ${live ? `<div class="install"><p>Install one</p><div class="cmd"><code>${esc(cmd)}</code><button type="button" data-copy="${esc(cmd)}">Copy</button></div></div>` : ''}
+        <p class="links">${live ? `<a class="btn main" href="${esc(base(s))}">Open the gallery</a>` : ''}<a class="btn" href="https://github.com/${esc(s.repo)}" target="_blank" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a></p>
+        <span class="sr" role="status"></span>
+      </div>`;
+    root.append(el);
+    // a demo button swaps the poster for that control, live, in a frame; pressing it again brings the poster back
+    const view = el.querySelector('.view'), poster = view.innerHTML, status = el.querySelector('[role=status]');
+    el.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
+      const d = s.demos[+b.dataset.i], on = b.getAttribute('aria-pressed') !== 'true';
+      el.querySelectorAll('.seg button').forEach((o) => o.setAttribute('aria-pressed', String(o === b && on)));
+      view.innerHTML = on ? `<div class="live"><iframe src="${esc(base(s) + d.path)}?embed=1" height="${tall(d)}" title="${esc(s.name)}: ${esc(d.name)}, live" loading="lazy"></iframe></div>` : poster;
+      status.textContent = on ? `${d.name} is live in the frame.` : 'Poster shown.';
+    }));
+    el.querySelector('[data-copy]')?.addEventListener('click', async (e) => {
+      const b = e.currentTarget, text = b.dataset.copy; let ok = false;
+      // the clipboard API needs https (or localhost), so fall back to a selected textarea
+      try { await navigator.clipboard.writeText(text); ok = true; } catch {
+        const t = Object.assign(document.createElement('textarea'), { value: text }); t.style.cssText = 'position:fixed;opacity:0'; document.body.append(t); t.select();
+        try { ok = document.execCommand('copy'); } catch {} t.remove();
+      }
+      b.textContent = ok ? 'Copied' : 'Select it'; status.textContent = ok ? 'Install command copied.' : 'Could not copy here.'; setTimeout(() => { b.textContent = 'Copy'; }, 1600);
+    });
+  }
+}).catch(() => { document.getElementById('sets').innerHTML = '<p>Could not load the list of sets.</p>'; });
+</script>
+</body>
+</html>
