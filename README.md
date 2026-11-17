@@ -32,7 +32,7 @@ Live: https://ui-sets.vercel.app
 | `paper` | the set's own background colour, shown behind its poster and its demo frame. |
 | `demos` | controls to try on this page. `path` is the control's demo page in the set (it is loaded with `?embed=1`), and `height` is the frame's height in pixels, or `[wide, narrow]` if the control is laid out differently on a phone. The first demo is the one in the install command. |
 
-A set needs a demo page per control that accepts `?embed=1` and hides its heading. The three sets here all do.
+A set needs a demo page per control that accepts `?embed=1` and hides its heading. The four sets here all do.
 
 ## Run it
 

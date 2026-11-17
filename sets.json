@@ -1,6 +1,51 @@
 {
   "sets": [
     {
+      "id": "cockpit-ui",
+      "name": "Cockpit UI",
+      "tagline": "Ordinary controls as the cockpit of a 1990s giant-robot anime. A confirm button you hold until the robot launches, a slider that is a dial, an AI agent's status as a turning hologram.",
+      "count": 11,
+      "made": "Painted pieces, screens drawn live",
+      "url": "https://cockpit-ui-kit.vercel.app",
+      "repo": "finktheartist/cockpit-ui",
+      "status": "live",
+      "paper": "#000000",
+      "demos": [
+        {
+          "name": "Launch",
+          "path": "launch/",
+          "height": [
+            470,
+            300
+          ]
+        },
+        {
+          "name": "Agent state",
+          "path": "agent/",
+          "height": [
+            560,
+            370
+          ]
+        },
+        {
+          "name": "Output gain",
+          "path": "dial/",
+          "height": [
+            470,
+            300
+          ]
+        },
+        {
+          "name": "Safety lock",
+          "path": "lock/",
+          "height": [
+            470,
+            300
+          ]
+        }
+      ]
+    },
+    {
       "id": "rubber-hose-ui",
       "name": "Rubber Hose UI",
       "tagline": "Ordinary controls as a 1930s rubber-hose cartoon. Every control is a character: the button gets bopped, the slider is a trombone, the toast is a toaster.",
