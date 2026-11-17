@@ -1,0 +1,1056 @@
+{
+ "sets": [
+  {
+   "id": "cockpit-ui",
+   "name": "Cockpit UI",
+   "url": "https://cockpit-ui-kit.vercel.app",
+   "repo": "finktheartist/cockpit-ui",
+   "paper": "#000000",
+   "made": "Painted pieces, screens drawn live",
+   "tagline": "Ordinary controls as the cockpit of a 1990s giant-robot anime. A confirm button you hold until the robot launches, a slider that is a dial, an AI agent's status as a turning hologram."
+  },
+  {
+   "id": "rubber-hose-ui",
+   "name": "Rubber Hose UI",
+   "url": "https://rubber-hose-ui.vercel.app",
+   "repo": "finktheartist/rubber-hose-ui",
+   "paper": "#ecd7ac",
+   "made": "Painted bodies, limbs drawn in code",
+   "tagline": "Ordinary controls as a 1930s rubber-hose cartoon. Every control is a character: the button gets bopped, the slider is a trombone, the toast is a toaster."
+  },
+  {
+   "id": "sakuga-vfx",
+   "name": "Sakuga VFX",
+   "url": "https://sakuga-vfx.vercel.app",
+   "repo": "finktheartist/sakuga-vfx",
+   "paper": "#ffffff",
+   "made": "Effects drawn in code on one canvas",
+   "tagline": "Ordinary controls that react like anime. Plain at rest; use one and it squashes on springs and throws smoke, impact bursts and manga sound-effect lettering."
+  },
+  {
+   "id": "pixel-worlds",
+   "name": "Pixel Worlds",
+   "url": "https://pixel-worlds.vercel.app",
+   "repo": "finktheartist/pixel-worlds",
+   "paper": "#efe6d2",
+   "made": "Every pixel painted in code",
+   "tagline": "Ordinary controls with a small living pixel-art scene inside them. The control's value drives the scene: hold delete and a dragon breathes fire across the button."
+  }
+ ],
+ "components": [
+  {
+   "id": "cockpit-ui/launch",
+   "set": "cockpit-ui",
+   "name": "launch",
+   "title": "Launch",
+   "kind": "Buttons",
+   "description": "A red button under an orange guard. Lift the guard, then hold the button: lamps count up, the screen counts down, speed lines close in. Hold to the end and the robot launches across the whole control.",
+   "docs": "Cockpit UI Launch is a plain script that registers a custom element. Load /cockpit-ui/launch.js with a script tag (not a module), then use <cockpit-launch></cockpit-launch>. Listen for cockpit:launch; read el.state (safe, armed, launched); el.reset() puts the guard back. Put it on a dark background.",
+   "tag": "cockpit-launch",
+   "file": "launch/launch.js",
+   "demo": "launch/",
+   "script": "/cockpit-ui/launch.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/launch",
+   "size": {
+    "w": 640,
+    "h": 514,
+    "box": [
+     0,
+     0,
+     640,
+     514
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/dial",
+   "set": "cockpit-ui",
+   "name": "dial",
+   "title": "Output gain",
+   "kind": "Inputs",
+   "description": "A slider that is a dial beside a screen. Turn it and eleven lamps light round it, the number and the trace on the screen climb, and the copy changes at each level. At 100 the pilot cuts in.",
+   "docs": "Cockpit UI Output gain is a plain script that registers a custom element. Load /cockpit-ui/dial.js with a script tag (not a module), then use <cockpit-dial value=\"20\"></cockpit-dial>. Read el.value (0 to 100); it fires input while it turns and change when let go. Works in forms with a name. Put it on a dark background.",
+   "tag": "cockpit-dial",
+   "file": "dial/dial.js",
+   "demo": "dial/",
+   "script": "/cockpit-ui/dial.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/dial",
+   "size": {
+    "w": 640,
+    "h": 514,
+    "box": [
+     0,
+     0,
+     640,
+     514
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/checklist",
+   "set": "cockpit-ui",
+   "name": "checklist",
+   "title": "Pre-launch check",
+   "kind": "Selection",
+   "description": "Four latching buttons with lit labels and a screen that keeps the tally. Tick all four and the deck crew wave you off.",
+   "docs": "Cockpit UI Pre-launch check is a plain script that registers a custom element. Load /cockpit-ui/checklist.js with a script tag (not a module), then use <cockpit-checklist></cockpit-checklist>. Read el.value (four digits such as \"1010\") and el.complete; it fires input and change. Works in forms with a name. Put it on a dark background.",
+   "tag": "cockpit-checklist",
+   "file": "checklist/checklist.js",
+   "demo": "checklist/",
+   "script": "/cockpit-ui/checklist.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/checklist",
+   "size": {
+    "w": 640,
+    "h": 514,
+    "box": [
+     0,
+     0,
+     640,
+     514
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/lock",
+   "set": "cockpit-ui",
+   "name": "lock",
+   "title": "Safety lock",
+   "kind": "Selection",
+   "description": "A heavy toggle between LOCK and RELEASE beside a screen listing four clamps. Throw it and the clamps let go one after another; when the last one goes, the restraints blow off.",
+   "docs": "Cockpit UI Safety lock is a plain script that registers a custom element. Load /cockpit-ui/lock.js with a script tag (not a module), then use <cockpit-lock></cockpit-lock>. Read el.checked and listen for change. Works in forms with a name. Put it on a dark background.",
+   "tag": "cockpit-lock",
+   "file": "lock/lock.js",
+   "demo": "lock/",
+   "script": "/cockpit-ui/lock.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/lock",
+   "size": {
+    "w": 640,
+    "h": 514,
+    "box": [
+     0,
+     0,
+     640,
+     514
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/mode",
+   "set": "cockpit-ui",
+   "name": "mode",
+   "title": "Drive mode",
+   "kind": "Selection",
+   "description": "Four key caps: cruise, combat, snipe, stealth. The chosen one lights in its own colour and the screen redraws for it. Choosing combat brings the robot's fist.",
+   "docs": "Cockpit UI Drive mode is a plain script that registers a custom element. Load /cockpit-ui/mode.js with a script tag (not a module), then use <cockpit-mode></cockpit-mode>. Read el.value (cruise, combat, snipe or stealth); it fires input and change. Works in forms with a name. Put it on a dark background.",
+   "tag": "cockpit-mode",
+   "file": "mode/mode.js",
+   "demo": "mode/",
+   "script": "/cockpit-ui/mode.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/mode",
+   "size": {
+    "w": 640,
+    "h": 514,
+    "box": [
+     0,
+     0,
+     640,
+     514
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/alert",
+   "set": "cockpit-ui",
+   "name": "alert",
+   "title": "Alert",
+   "kind": "Feedback",
+   "description": "A warning panel: three level lamps, a hazard-striped window and an ACKNOWLEDGE bar. It shows a notice, a caution or a warning; a warning flashes red and brings the missiles.",
+   "docs": "Cockpit UI Alert is a plain script that registers a custom element. Load /cockpit-ui/alert.js with a script tag (not a module), then use <cockpit-alert></cockpit-alert> and call el.show(\"warning\", \"Disk almost full\"). Listen for cockpit:ack; read el.level. Put it on a dark background.",
+   "tag": "cockpit-alert",
+   "file": "alert/alert.js",
+   "demo": "alert/",
+   "script": "/cockpit-ui/alert.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/alert",
+   "size": {
+    "w": 640,
+    "h": 514,
+    "box": [
+     0,
+     0,
+     640,
+     514
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/tabs",
+   "set": "cockpit-ui",
+   "name": "tabs",
+   "title": "Monitor select",
+   "kind": "Navigation",
+   "description": "Three key caps over a monitor: main, sub and rear. Changing tab cuts through static. Stay on the rear camera for a moment and a contact turns up.",
+   "docs": "Cockpit UI Monitor select is a plain script that registers a custom element. Load /cockpit-ui/tabs.js with a script tag (not a module), then use <cockpit-tabs></cockpit-tabs>. Read el.value (main, sub or rear); it fires input and change. Put it on a dark background.",
+   "tag": "cockpit-tabs",
+   "file": "tabs/tabs.js",
+   "demo": "tabs/",
+   "script": "/cockpit-ui/tabs.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/tabs",
+   "size": {
+    "w": 640,
+    "h": 514,
+    "box": [
+     0,
+     0,
+     640,
+     514
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/agent",
+   "set": "cockpit-ui",
+   "name": "agent",
+   "title": "Agent state",
+   "kind": "Status",
+   "description": "A status display for an AI agent. The robot stands as a hologram on a projector base and turns; its pose and colour follow the state (standby, thinking, working, waiting, done, error) and a window names the task.",
+   "docs": "Cockpit UI Agent state is a plain script that registers a custom element. Load /cockpit-ui/agent.js with a script tag (not a module), then use <cockpit-agent></cockpit-agent> and call el.set(\"working\", \"reading 12 files\"). States: standby, thinking, working, waiting, done, error. It fires cockpit:state. Put it on a dark background.",
+   "tag": "cockpit-agent",
+   "file": "agent/agent.js",
+   "demo": "agent/",
+   "script": "/cockpit-ui/agent.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/agent",
+   "size": {
+    "w": 640,
+    "h": 611,
+    "box": [
+     0,
+     0,
+     640,
+     587
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/loading",
+   "set": "cockpit-ui",
+   "name": "loading",
+   "title": "System load",
+   "kind": "Loading",
+   "description": "A long gauge with a segmented bar and a number window. Feed it progress and the line under it reports what is starting up; at 100 the robot's visor lights.",
+   "docs": "Cockpit UI System load is a plain script that registers a custom element. Load /cockpit-ui/loading.js with a script tag (not a module), then use <cockpit-loading></cockpit-loading> and call el.set(0.4) with progress from 0 to 1. Add the demo attribute to make it run by itself. It fires cockpit:done at 100. Put it on a dark background.",
+   "tag": "cockpit-loading",
+   "file": "loading/loading.js",
+   "demo": "loading/",
+   "script": "/cockpit-ui/loading.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/loading",
+   "size": {
+    "w": 640,
+    "h": 343,
+    "box": [
+     0,
+     0,
+     640,
+     343
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/stepper",
+   "set": "cockpit-ui",
+   "name": "stepper",
+   "title": "Active time",
+   "kind": "Inputs",
+   "description": "Minus and plus keys round an amber window, with a strip of ten lamps. Each press is thirty seconds; hold to repeat. At five minutes the power cable comes out.",
+   "docs": "Cockpit UI Active time is a plain script that registers a custom element. Load /cockpit-ui/stepper.js with a script tag (not a module), then use <cockpit-stepper value=\"120\"></cockpit-stepper>. Read el.value in seconds (30 to 300); it fires input and change. Works in forms with a name. Put it on a dark background.",
+   "tag": "cockpit-stepper",
+   "file": "stepper/stepper.js",
+   "demo": "stepper/",
+   "script": "/cockpit-ui/stepper.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/stepper",
+   "size": {
+    "w": 640,
+    "h": 343,
+    "box": [
+     0,
+     0,
+     640,
+     343
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "cockpit-ui/input",
+   "set": "cockpit-ui",
+   "name": "input",
+   "title": "Callsign",
+   "kind": "Inputs",
+   "description": "A real text field in a long green window, with a character count and a small speaker screen. Typing rattles the keys; Enter registers the name and the bridge answers.",
+   "docs": "Cockpit UI Callsign is a plain script that registers a custom element. Load /cockpit-ui/input.js with a script tag (not a module), then use <cockpit-input></cockpit-input>. Read el.value; it fires input, change, and cockpit:enter with { value } when Enter is pressed. Works in forms with a name. Put it on a dark background.",
+   "tag": "cockpit-input",
+   "file": "input/input.js",
+   "demo": "input/",
+   "script": "/cockpit-ui/input.js",
+   "install": "npx shadcn add finktheartist/cockpit-ui/input",
+   "size": {
+    "w": 640,
+    "h": 343,
+    "box": [
+     0,
+     0,
+     640,
+     343
+    ],
+    "bg": "rgb(0, 0, 0)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/button",
+   "set": "rubber-hose-ui",
+   "name": "button",
+   "title": "Button",
+   "kind": "Buttons",
+   "description": "A button who is a red dome with a grin. Press him and a gloved fist comes down and flattens him, with stars and BOP!; let go and he springs back black-eyed and bandaged, with birds going round his head.",
+   "docs": "Rubber Hose Button is a plain script that registers a custom element. Load /rubber-hose-ui/button.js with a script tag (not a module), then use <hose-button>Confirm</hose-button>. Listen for click; type=\"submit\" submits its form. The text inside is its accessible name and is not shown.",
+   "tag": "hose-button",
+   "file": "button/button.js",
+   "demo": "button/",
+   "script": "/rubber-hose-ui/button.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/button",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/toggle",
+   "set": "rubber-hose-ui",
+   "name": "toggle",
+   "title": "Toggle",
+   "kind": "Selection",
+   "description": "A switch whose knob is a lightbulb. Off, he is grey and half asleep. Switch it on and he stretches across like taffy, lights up, and throws his fists in the air under a ring of rays, with CLICK!.",
+   "docs": "Rubber Hose Toggle is a plain script that registers a custom element. Load /rubber-hose-ui/toggle.js with a script tag (not a module), then use <hose-toggle label=\"Lights\"></hose-toggle>. Read el.checked and listen for change. Works in forms with a name.",
+   "tag": "hose-toggle",
+   "file": "toggle/toggle.js",
+   "demo": "toggle/",
+   "script": "/rubber-hose-ui/toggle.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/toggle",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/slider",
+   "set": "rubber-hose-ui",
+   "name": "slider",
+   "title": "Slider",
+   "kind": "Inputs",
+   "description": "A slider who is a trombone. His slide is the track and his own gloved hand on its handle is the thumb. Notes come out of the bell while it moves, and a fast pull gets a TOOT!.",
+   "docs": "Rubber Hose Slider is a plain script that registers a custom element. Load /rubber-hose-ui/slider.js with a script tag (not a module), then use <hose-slider value=\"35\" label=\"Volume\"></hose-slider>, with min, max and step. Read el.value; it fires input and change. Works in forms with a name.",
+   "tag": "hose-slider",
+   "file": "slider/slider.js",
+   "demo": "slider/",
+   "script": "/rubber-hose-ui/slider.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/slider",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/checkbox",
+   "set": "rubber-hose-ui",
+   "name": "checkbox",
+   "title": "Checkbox",
+   "kind": "Selection",
+   "description": "A checkbox who is a square fellow with a blank front. Tick him and his own arm swings round and slaps the check mark on, with ink flying and SPLAT!. Untick him and he wipes it off in a puff.",
+   "docs": "Rubber Hose Checkbox is a plain script that registers a custom element. Load /rubber-hose-ui/checkbox.js with a script tag (not a module), then use <hose-checkbox>Remember me</hose-checkbox>. Read el.checked and listen for change. Works in forms with a name. The text inside is its accessible name and is not shown.",
+   "tag": "hose-checkbox",
+   "file": "checkbox/checkbox.js",
+   "demo": "checkbox/",
+   "script": "/rubber-hose-ui/checkbox.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/checkbox",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/radio",
+   "set": "rubber-hose-ui",
+   "name": "radio",
+   "title": "Radio",
+   "kind": "Selection",
+   "description": "A radio group of round faces, one to a choice. The chosen one is blue, wide awake and bouncing; the others are cream and dozing off. Pick a sleeper and he pops awake with POP! while the last one nods off.",
+   "docs": "Rubber Hose Radio is a plain script that registers a custom element. Load /rubber-hose-ui/radio.js with a script tag (not a module), then use <hose-radio label=\"Plan\"><option value=\"a\" selected>Option A</option><option value=\"b\">Option B</option></hose-radio>. Read el.value and listen for change. Works in forms with a name.",
+   "tag": "hose-radio",
+   "file": "radio/radio.js",
+   "demo": "radio/",
+   "script": "/rubber-hose-ui/radio.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/radio",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/input",
+   "set": "rubber-hose-ui",
+   "name": "input",
+   "title": "Text input",
+   "kind": "Inputs",
+   "description": "A text field with a fountain pen standing on it. His nib sits on the caret: he goes wherever the caret goes, hops when a letter lands and flicks ink off his nib.",
+   "docs": "Rubber Hose Text input is a plain script that registers a custom element. Load /rubber-hose-ui/input.js with a script tag (not a module), then use <hose-input label=\"Name\" placeholder=\"Type something…\"></hose-input>. Read and set el.value; it fires input and change. Works in forms with a name.",
+   "tag": "hose-input",
+   "file": "input/input.js",
+   "demo": "input/",
+   "script": "/rubber-hose-ui/input.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/input",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/tabs",
+   "set": "rubber-hose-ui",
+   "name": "tabs",
+   "title": "Tabs",
+   "kind": "Navigation",
+   "description": "Folder tabs on a rail. The active one is alive: he stands up out of the rail with his fists in the air and his legs kicking underneath. Pick another and the first drops back while the new one pops up.",
+   "docs": "Rubber Hose Tabs is a plain script that registers a custom element. Load /rubber-hose-ui/tabs.js with a script tag (not a module), then use <hose-tabs label=\"Sections\"><option>Home</option><option>Profile</option></hose-tabs>, two to four tabs. Listen for change (e.detail: index, value, label) and show the panel yourself.",
+   "tag": "hose-tabs",
+   "file": "tabs/tabs.js",
+   "demo": "tabs/",
+   "script": "/rubber-hose-ui/tabs.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/tabs",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/progress",
+   "set": "rubber-hose-ui",
+   "name": "progress",
+   "title": "Progress",
+   "kind": "Loading",
+   "description": "A loading bar who is a thermometer lying on his side, propped up on his hands. The red climbs his tube while he strains and sweats; at a hundred he lets out a PHEW! and throws his fists up.",
+   "docs": "Rubber Hose Progress is a plain script that registers a custom element. Load /rubber-hose-ui/progress.js with a script tag (not a module), then use <hose-progress label=\"Loading\"></hose-progress> and call el.set(n) with progress from 0 to 1. Listen for hose:done (fires once). el.reset() for the next task.",
+   "tag": "hose-progress",
+   "file": "progress/progress.js",
+   "demo": "progress/",
+   "script": "/rubber-hose-ui/progress.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/progress",
+   "size": {
+    "w": 640,
+    "h": 361,
+    "box": [
+     134,
+     0,
+     372,
+     320
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/rating",
+   "set": "rubber-hose-ui",
+   "name": "rating",
+   "title": "Rating",
+   "kind": "Selection",
+   "description": "Five stars in a chorus line. The ones you have given are yellow, laughing and kicking in time; the rest are pale and asleep. They wake one after another when the score goes up, with POP!.",
+   "docs": "Rubber Hose Rating is a plain script that registers a custom element. Load /rubber-hose-ui/rating.js with a script tag (not a module), then use <hose-rating label=\"Rating\"></hose-rating>. Read el.value (0 to 5) and listen for change. Works in forms with a name.",
+   "tag": "hose-rating",
+   "file": "rating/rating.js",
+   "demo": "rating/",
+   "script": "/rubber-hose-ui/rating.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/rating",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/toast",
+   "set": "rubber-hose-ui",
+   "name": "toast",
+   "title": "Toast",
+   "kind": "Feedback",
+   "description": "A notification who is a toaster. Call show() and he hops up, braces, shakes, and a slice of toast with the message written on it jumps out of his slot, with DING!.",
+   "docs": "Rubber Hose Toast is a plain script that registers a custom element. Load /rubber-hose-ui/toast.js with a script tag (not a module), put <hose-toast></hose-toast> where toasts should appear and call el.show(\"Saved!\"). It stays for the duration attribute (3.6 s) or until el.hide().",
+   "tag": "hose-toast",
+   "file": "toast/toast.js",
+   "demo": "toast/",
+   "script": "/rubber-hose-ui/toast.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/toast",
+   "size": {
+    "w": 640,
+    "h": 315,
+    "box": [
+     132,
+     0,
+     377,
+     315
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "rubber-hose-ui/tooltip",
+   "set": "rubber-hose-ui",
+   "name": "tooltip",
+   "title": "Tooltip",
+   "kind": "Feedback",
+   "description": "A help button with a bird behind it. Point at the question mark, focus it or tap it, and the bird pops up towing the hint on a balloon, with TWEET!.",
+   "docs": "Rubber Hose Tooltip is a plain script that registers a custom element. Load /rubber-hose-ui/tooltip.js with a script tag (not a module), then use <hose-tooltip text=\"Helpful hint!\"></hose-tooltip>. Opens on hover, focus and tap; Escape closes it.",
+   "tag": "hose-tooltip",
+   "file": "tooltip/tooltip.js",
+   "demo": "tooltip/",
+   "script": "/rubber-hose-ui/tooltip.js",
+   "install": "npx shadcn add finktheartist/rubber-hose-ui/tooltip",
+   "size": {
+    "w": 640,
+    "h": 313,
+    "box": [
+     134,
+     0,
+     372,
+     313
+    ],
+    "bg": "rgb(236, 215, 172)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/button",
+   "set": "sakuga-vfx",
+   "name": "button",
+   "title": "Button",
+   "kind": "Buttons",
+   "description": "A button that reacts like an anime impact frame: it squashes when pressed, inverts for one frame on release, and a burst goes off behind it with clouds and ドン!. A secondary variant is quieter.",
+   "docs": "Sakuga Button is a plain script that registers a custom element. Load /sakuga-vfx/button.js with a script tag (not a module), then use <sakuga-button>Confirm</sakuga-button> (variant=\"secondary\" for the quiet one). Listen for click; call el.done() when the action worked to land a check on it.",
+   "tag": "sakuga-button",
+   "file": "button/button.js",
+   "demo": "button/",
+   "script": "/sakuga-vfx/button.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/button",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     140,
+     15,
+     361,
+     310
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/toggle",
+   "set": "sakuga-vfx",
+   "name": "toggle",
+   "title": "Toggle",
+   "kind": "Selection",
+   "description": "A switch whose flip is 43 painted frames: the knob smears across, slams into the end, throws up a splash, and the track floods and settles. The frames are inside the file (about 500 KB).",
+   "docs": "Sakuga Toggle is a plain script that registers a custom element. Load /sakuga-vfx/toggle.js with a script tag (not a module), then use <sakuga-toggle label=\"Notifications\"></sakuga-toggle>. Read el.checked and listen for change. Works in forms with a name.",
+   "tag": "sakuga-toggle",
+   "file": "toggle/toggle.js",
+   "demo": "toggle/",
+   "script": "/sakuga-vfx/toggle.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/toggle",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     200,
+     101,
+     240,
+     206
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/slider",
+   "set": "sakuga-vfx",
+   "name": "slider",
+   "title": "Slider",
+   "kind": "Inputs",
+   "description": "A range slider whose thumb stretches and lags on a spring, with cumulus rolling up behind a fast drag and a crescent thrown ahead on release.",
+   "docs": "Sakuga Slider is a plain script that registers a custom element. Load /sakuga-vfx/slider.js with a script tag (not a module), then use <sakuga-slider value=\"30\" label=\"Volume\"></sakuga-slider>, with min, max, step and unit. Read el.value; it fires input and change. Works in forms with a name.",
+   "tag": "sakuga-slider",
+   "file": "slider/slider.js",
+   "demo": "slider/",
+   "script": "/sakuga-vfx/slider.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/slider",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     169,
+     55,
+     302,
+     260
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/checkbox",
+   "set": "sakuga-vfx",
+   "name": "checkbox",
+   "title": "Checkbox",
+   "kind": "Selection",
+   "description": "A checkbox that slashes: crescents swing round the box, crystals fly, the tick draws itself, and ズザッ lands in dotted letters.",
+   "docs": "Sakuga Checkbox is a plain script that registers a custom element. Load /sakuga-vfx/checkbox.js with a script tag (not a module), then use <sakuga-checkbox>Remember me</sakuga-checkbox>. Read el.checked and listen for change. Works in forms with a name.",
+   "tag": "sakuga-checkbox",
+   "file": "checkbox/checkbox.js",
+   "demo": "checkbox/",
+   "script": "/sakuga-vfx/checkbox.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/checkbox",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     200,
+     67,
+     240,
+     206
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/radio",
+   "set": "sakuga-vfx",
+   "name": "radio",
+   "title": "Radio",
+   "kind": "Selection",
+   "description": "A radio group whose picked dot springs in with a fan of wedges, two puffs and a hollow ポン.",
+   "docs": "Sakuga Radio is a plain script that registers a custom element. Load /sakuga-vfx/radio.js with a script tag (not a module), then use <sakuga-radio label=\"Plan\"><option value=\"a\" selected>Option A</option><option value=\"b\">Option B</option></sakuga-radio>. Read el.value and listen for change. Works in forms with a name.",
+   "tag": "sakuga-radio",
+   "file": "radio/radio.js",
+   "demo": "radio/",
+   "script": "/sakuga-vfx/radio.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/radio",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     200,
+     67,
+     240,
+     206
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/input",
+   "set": "sakuga-vfx",
+   "name": "input",
+   "title": "Input",
+   "kind": "Inputs",
+   "description": "A text field that kicks up a puff of dust from the caret on every key.",
+   "docs": "Sakuga Input is a plain script that registers a custom element. Load /sakuga-vfx/input.js with a script tag (not a module), then use <sakuga-input label=\"Name\" placeholder=\"Type something\"></sakuga-input>. Read and set el.value; it fires input and change. Works in forms with a name.",
+   "tag": "sakuga-input",
+   "file": "input/input.js",
+   "demo": "input/",
+   "script": "/sakuga-vfx/input.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/input",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     169,
+     40,
+     302,
+     260
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/tabs",
+   "set": "sakuga-vfx",
+   "name": "tabs",
+   "title": "Tabs",
+   "kind": "Navigation",
+   "description": "Tabs where the raised tab slides to the one you pick, stretching, and lands with wedges and a puff.",
+   "docs": "Sakuga Tabs is a plain script that registers a custom element. Load /sakuga-vfx/tabs.js with a script tag (not a module), then use <sakuga-tabs label=\"Sections\"><option>Home</option><option>Profile</option></sakuga-tabs>. Listen for change (e.detail: index, value, label) and show the panel yourself.",
+   "tag": "sakuga-tabs",
+   "file": "tabs/tabs.js",
+   "demo": "tabs/",
+   "script": "/sakuga-vfx/tabs.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/tabs",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     159,
+     37,
+     322,
+     277
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/progress",
+   "set": "sakuga-vfx",
+   "name": "progress",
+   "title": "Progress",
+   "kind": "Loading",
+   "description": "A loading bar with a storm cloud riding its leading edge, pebbles lifting off the ground and ゴゴゴゴ; at the end a burst, ドン! and a check.",
+   "docs": "Sakuga Progress is a plain script that registers a custom element. Load /sakuga-vfx/progress.js with a script tag (not a module), then use <sakuga-progress label=\"Loading\"></sakuga-progress>, then el.set(n) with progress from 0 to 1. Listen for sakuga:done (fires once). el.reset() for the next task.",
+   "tag": "sakuga-progress",
+   "file": "progress/progress.js",
+   "demo": "progress/",
+   "script": "/sakuga-vfx/progress.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/progress",
+   "size": {
+    "w": 640,
+    "h": 401,
+    "box": [
+     144,
+     19,
+     352,
+     303
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/rating",
+   "set": "sakuga-vfx",
+   "name": "rating",
+   "title": "Rating",
+   "kind": "Selection",
+   "description": "Five stars that pop in one after another, with wedges and a hollow ポン on the last; five gets a burst.",
+   "docs": "Sakuga Rating is a plain script that registers a custom element. Load /sakuga-vfx/rating.js with a script tag (not a module), then use <sakuga-rating label=\"Rating\"></sakuga-rating>. Read el.value (0 to 5) and listen for change. Works in forms with a name.",
+   "tag": "sakuga-rating",
+   "file": "rating/rating.js",
+   "demo": "rating/",
+   "script": "/sakuga-vfx/rating.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/rating",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     174,
+     44,
+     292,
+     251
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/toast",
+   "set": "sakuga-vfx",
+   "name": "toast",
+   "title": "Toast",
+   "kind": "Feedback",
+   "description": "A notification that streaks in as a smear, lands in dust with ズザッ, wobbles and leaves by shrinking.",
+   "docs": "Sakuga Toast is a plain script that registers a custom element. Load /sakuga-vfx/toast.js with a script tag (not a module), then use Put <sakuga-toast></sakuga-toast> where toasts should appear and call el.show(\"Saved\"). It stays for the duration attribute (2.6 s) or until el.hide().",
+   "tag": "sakuga-toast",
+   "file": "toast/toast.js",
+   "demo": "toast/",
+   "script": "/sakuga-vfx/toast.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/toast",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     137,
+     13,
+     366,
+     315
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "sakuga-vfx/tooltip",
+   "set": "sakuga-vfx",
+   "name": "tooltip",
+   "title": "Tooltip",
+   "kind": "Feedback",
+   "description": "A help button whose hint springs out like a speech bubble, with puffs and a hollow カチッ.",
+   "docs": "Sakuga Tooltip is a plain script that registers a custom element. Load /sakuga-vfx/tooltip.js with a script tag (not a module), then use <sakuga-tooltip text=\"Helpful hint!\"></sakuga-tooltip>. Opens on hover, focus and tap; Escape closes it.",
+   "tag": "sakuga-tooltip",
+   "file": "tooltip/tooltip.js",
+   "demo": "tooltip/",
+   "script": "/sakuga-vfx/tooltip.js",
+   "install": "npx shadcn add finktheartist/sakuga-vfx/tooltip",
+   "size": {
+    "w": 640,
+    "h": 367,
+    "box": [
+     200,
+     97,
+     240,
+     206
+    ],
+    "bg": "rgb(255, 255, 255)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pixel-worlds/sage",
+   "set": "pixel-worlds",
+   "name": "sage",
+   "title": "Sage",
+   "kind": "Status",
+   "description": "Agent thinking states as a status chip: a pixel-art wizard at his desk who does whatever the agent is doing.",
+   "docs": "Sage is a plain script that registers a custom element. Load /pixel-worlds/sage.js with a script tag, then use <sage-status state=\"thinking\"></sage-status> and call el.set(state, label, detail). States: thinking, searching, reading, running, writing, waiting, done, failed.",
+   "tag": "sage-status",
+   "file": "sage/sage.js",
+   "demo": "sage/",
+   "script": "/pixel-worlds/sage.js",
+   "install": "npx shadcn add finktheartist/pixel-worlds/sage",
+   "size": {
+    "w": 640,
+    "h": 150,
+    "box": [
+     0,
+     0,
+     378,
+     150
+    ],
+    "bg": "rgb(239, 232, 216)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pixel-worlds/hoard",
+   "set": "pixel-worlds",
+   "name": "hoard",
+   "title": "Hoard",
+   "kind": "Buttons",
+   "description": "A hold-to-delete button with a pixel-art dragon in it. Hold and the fire is the fill; hold to the end and it fires hoard:delete.",
+   "docs": "Hoard is a plain script that registers a custom element. Load /pixel-worlds/hoard.js with a script tag, then use <hoard-button heading=\"Delete this project\" warning=\"This can't be undone.\"></hoard-button> and listen for the hoard:delete event.",
+   "tag": "hoard-button",
+   "file": "hoard/hoard.js",
+   "demo": "hoard/",
+   "script": "/pixel-worlds/hoard.js",
+   "install": "npx shadcn add finktheartist/pixel-worlds/hoard",
+   "size": {
+    "w": 640,
+    "h": 120,
+    "box": [
+     0,
+     0,
+     640,
+     120
+    ],
+    "bg": "rgb(239, 232, 216)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pixel-worlds/raven",
+   "set": "pixel-worlds",
+   "name": "raven",
+   "title": "Raven",
+   "kind": "Buttons",
+   "description": "A send button with a pixel-art raven in it. He carries the message across the button to a tower window, and that flight is the progress.",
+   "docs": "Raven is a plain script that registers a custom element. Load /pixel-worlds/raven.js with a script tag, then use <raven-send></raven-send>. Set the progress attribute (0 to 1) from your own send, or leave it off for a timed flight on click. Listen for the raven:sent event.",
+   "tag": "raven-send",
+   "file": "raven/raven.js",
+   "demo": "raven/",
+   "script": "/pixel-worlds/raven.js",
+   "install": "npx shadcn add finktheartist/pixel-worlds/raven",
+   "size": {
+    "w": 640,
+    "h": 120,
+    "box": [
+     137,
+     0,
+     366,
+     120
+    ],
+    "bg": "rgb(239, 232, 216)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pixel-worlds/round",
+   "set": "pixel-worlds",
+   "name": "round",
+   "title": "Round",
+   "kind": "Loading",
+   "description": "A loading bar that is the bar of a tavern: seven pixel-art regulars empty their cups in turn as the task loads.",
+   "docs": "Round is a plain script that registers a custom element. Load /pixel-worlds/round.js with a script tag, then use <round-bar value=\"0\" label=\"Loading\"></round-bar> and call el.set(n) with progress from 0 to 1. Listen for the round:done event.",
+   "tag": "round-bar",
+   "file": "round/round.js",
+   "demo": "round/",
+   "script": "/pixel-worlds/round.js",
+   "install": "npx shadcn add finktheartist/pixel-worlds/round",
+   "size": {
+    "w": 640,
+    "h": 300,
+    "box": [
+     0,
+     0,
+     640,
+     300
+    ],
+    "bg": "rgb(239, 232, 216)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pixel-worlds/keep",
+   "set": "pixel-worlds",
+   "name": "keep",
+   "title": "Keep",
+   "kind": "Inputs",
+   "description": "A password field where strength is a castle: each keystroke builds more of it, and a raccoon tests what you built.",
+   "docs": "Keep is a plain script that registers a custom element. Load /pixel-worlds/keep.js with a script tag, then use <keep-field></keep-field>. Read el.value and el.score (0 to 1), and listen for the keep:change event.",
+   "tag": "keep-field",
+   "file": "keep/keep.js",
+   "demo": "keep/",
+   "script": "/pixel-worlds/keep.js",
+   "install": "npx shadcn add finktheartist/pixel-worlds/keep",
+   "size": {
+    "w": 640,
+    "h": 396,
+    "box": [
+     47,
+     0,
+     547,
+     396
+    ],
+    "bg": "rgb(239, 232, 216)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pixel-worlds/sigil",
+   "set": "pixel-worlds",
+   "name": "sigil",
+   "title": "Sigil",
+   "kind": "Loading",
+   "description": "A loading spinner that is a summoning circle cut into slate-blue stone, with a wisp for a light. With no value the wisp circles the ring; give it a value and the runes charge one by one; at 100% something answers.",
+   "docs": "Sigil is a plain script that registers a custom element. Load /pixel-worlds/sigil.js with a script tag, then use <sigil-spinner label=\"Loading\"></sigil-spinner>. With no value it is a plain spinner. Call el.set(n) with progress from 0 to 1 to fill the arc and charge the runes (a value that stands still shows as waiting), el.set(1) to finish, el.fail() if the task fails, and listen for the sigil:done and sigil:fail events.",
+   "tag": "sigil-spinner",
+   "file": "sigil/sigil.js",
+   "demo": "sigil/",
+   "script": "/pixel-worlds/sigil.js",
+   "install": "npx shadcn add finktheartist/pixel-worlds/sigil",
+   "size": {
+    "w": 640,
+    "h": 349,
+    "box": [
+     165,
+     0,
+     309,
+     266
+    ],
+    "bg": "rgb(239, 232, 216)"
+   },
+   "loop": true
+  }
+ ]
+}
