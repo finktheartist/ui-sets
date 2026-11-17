@@ -1,4 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "trailingSlash": true
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/library",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/library/",
+      "destination": "/",
+      "permanent": true
+    }
+  ]
 }

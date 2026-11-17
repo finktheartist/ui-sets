@@ -3,110 +3,388 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>UI sets by Justin Finkelman</title>
-<meta name="description" content="Themed sets of drop-in web components. Every control is a single file with no dependencies.">
+<title>finktheartist's UI Library</title>
+<meta name="description" content="Every control from every UI set on one page. Hover a card to play with it, open it for the install line and the code.">
 <style>
-  /* One page that lists every component set. The page is plain on purpose (greys and hairlines, no accent colour) so the
-     sets are the only loud things on it. The sets come from sets.json; adding one is adding an entry there and a poster. */
-  :root { color-scheme: light dark; --page: #fafaf9; --card: #ffffff; --text: #17171a; --mute: #6b6b74; --line: #e3e3e6; --chip: #f1f1f2; }
-  @media (prefers-color-scheme: dark) { :root { --page: #0e0e10; --card: #151518; --text: #f1f1f3; --mute: #9a9aa5; --line: #29292e; --chip: #1e1e22; } }
+  /* Every control from every set, as one library. Two views on one page:
+     the grid (#/), where each card is a still that turns into the live control while you hover it, and
+     a control's own page (#/SET/NAME), with every control in a sidebar, the control live, and the install line and code.
+     The data is library/components.json, built from each set's registry.json by tools/library.mjs, with the stills and loops
+     beside it in library/. ?local frames the sets from _sets/. The page that lists the sets themselves is sets/. */
+  :root { color-scheme: dark; --page: #111113; --raise: #19191c; --card: #1d1d21; --text: #f2f2f4; --mute: #8e8e98; --faint: #5d5d66; --line: #2a2a30; --chip: #232328; --on: #f2f2f4; --on-text: #111113; }
+  :root[data-theme=light] { color-scheme: light; --page: #f5f5f3; --raise: #ffffff; --card: #ffffff; --text: #17171a; --mute: #6b6b74; --faint: #a1a1a8; --line: #e3e3e6; --chip: #ededee; --on: #17171a; --on-text: #ffffff; }
   * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; overflow-x: clip; background: var(--page); }
+  html { -webkit-text-size-adjust: 100%; overflow-x: clip; background: var(--page); scrollbar-gutter: stable; }
   body { margin: 0; color: var(--text); background: var(--page); font: 400 15px/1.5 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
-  a { color: inherit; } button { font: inherit; color: inherit; }
-  :focus-visible { outline: 2px solid var(--text); outline-offset: 3px; border-radius: 6px; }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 56px 20px 96px; }
-  header { max-width: 640px; }
-  h1 { margin: 0; font-size: 30px; line-height: 1.15; font-weight: 650; letter-spacing: -.02em; }
-  .lede { margin: 12px 0 0; color: var(--mute); font-size: 17px; line-height: 1.5; }
-  .by { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; font-size: 14px; }
-  .by a { text-decoration: none; border-bottom: 1px solid var(--line); } .by a:hover { border-color: var(--text); }
-  .sets { display: grid; gap: 28px; margin-top: 48px; }
-  .set { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); border: 1px solid var(--line); border-radius: 16px; background: var(--card); overflow: hidden; }
-  .view { position: relative; display: grid; min-width: 0; border-right: 1px solid var(--line); background: var(--paper, var(--chip)); }
-  .view img { display: block; width: 100%; height: 100%; min-height: 300px; object-fit: cover; object-position: top center; }
-  .view iframe { display: block; width: 100%; border: 0; background: var(--paper, #fff); }
-  .view .live { align-self: center; padding: 14px 0; }
-  .info { display: flex; flex-direction: column; min-width: 0; padding: 26px 26px 22px; }
-  .info h2 { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 650; letter-spacing: -.015em; }
-  .tag { margin: 10px 0 0; color: var(--mute); }
-  .meta { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 13px; color: var(--mute); }
-  .meta li + li::before { content: "·"; margin-right: 14px; }
-  .try { margin: 20px 0 0; }
-  .try p, .install p { margin: 0 0 7px; font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
-  .seg { display: flex; flex-wrap: wrap; gap: 6px; }
-  .seg button, .btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: none; font-size: 13px; font-weight: 550; text-decoration: none; cursor: pointer; white-space: nowrap; }
-  .seg button:hover, .btn:hover { border-color: var(--text); }
-  .seg button[aria-pressed=true] { background: var(--text); border-color: var(--text); color: var(--card); }
-  .install { margin: 20px 0 0; }
-  .cmd { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 4px 4px 4px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--chip); }
-  .cmd code { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: 12.5px/1.4 ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
-  .cmd button { flex: none; height: 28px; padding: 0 10px; border: 1px solid var(--line); border-radius: 7px; background: var(--card); font-size: 12.5px; font-weight: 550; cursor: pointer; }
-  .cmd button:hover { border-color: var(--text); }
-  .links { display: flex; flex-wrap: wrap; gap: 8px; margin: auto 0 0; padding-top: 22px; }
-  .btn.main { background: var(--text); border-color: var(--text); color: var(--card); }
-  .soon { display: inline-block; margin-left: 8px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 999px; font-size: 11.5px; font-weight: 550; letter-spacing: .02em; color: var(--mute); vertical-align: 3px; }
-  .foot { margin: 56px 0 0; color: var(--mute); font-size: 13.5px; max-width: 640px; }
-  .foot code { padding: 1px 5px; border-radius: 5px; background: var(--chip); font-size: 12.5px; }
+  a { color: inherit; text-decoration: none; } button, input { font: inherit; color: inherit; }
+  button { cursor: pointer; }
+  :focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 8px; }
+  [hidden] { display: none !important; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  @media (max-width: 820px) { .set { grid-template-columns: 1fr; } .view { border-right: 0; border-bottom: 1px solid var(--line); } .view img { min-height: 0; aspect-ratio: 16 / 10; } .wrap { padding-top: 36px; } }
+  kbd { padding: 1px 5px; border: 1px solid var(--line); border-radius: 5px; font: 11px/1.4 ui-monospace, "SF Mono", Menlo, monospace; color: var(--mute); }
+
+  /* top bar */
+  .bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 18px; height: 56px; padding: 0 max(16px, env(safe-area-inset-left)); background: color-mix(in srgb, var(--page) 86%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+  .bar.scrolled { border-bottom-color: var(--line); }
+  .brand { display: flex; align-items: center; gap: 8px; font-weight: 650; letter-spacing: -.01em; }
+  .brand i { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 16px; height: 16px; }
+  .brand i b { border-radius: 2px; } .brand span { color: var(--mute); font-weight: 450; }
+  .bar nav { display: flex; gap: 4px; font-size: 13.5px; }
+  .bar nav a { padding: 6px 10px; border-radius: 8px; color: var(--mute); } .bar nav a:hover, .bar nav a[aria-current] { color: var(--text); background: var(--chip); }
+  .bar .end { margin-left: auto; display: flex; align-items: center; gap: 6px; }
+  .icon { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 999px; background: none; color: var(--text); }
+  .icon:hover { background: var(--chip); } .icon svg { width: 16px; height: 16px; }
+
+  /* grid view */
+  .wrap { max-width: 1440px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left)) 96px; }
+  .head { padding-top: 40px; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
+  .head h2 { margin: 0; font-size: 22px; font-weight: 650; letter-spacing: -.02em; }
+  .head p { margin: 4px 0 0; color: var(--mute); font-size: 13.5px; }
+  .count { flex: none; text-align: right; color: var(--mute); font-size: 13px; } .count b { color: var(--text); font-size: 28px; font-weight: 650; letter-spacing: -.02em; margin-right: 5px; }
+  .tools { position: sticky; top: 56px; z-index: 10; display: grid; gap: 10px; margin: 20px 0 18px; padding: 10px 0; background: var(--page); }
+  .row { display: flex; min-width: 0; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -2px; padding: 2px; } .row::-webkit-scrollbar { display: none; }
+  .pill { flex: none; display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px; border: 1px solid var(--line); border-radius: 999px; background: var(--raise); font-size: 13.5px; font-weight: 550; white-space: nowrap; }
+  .pill:hover { border-color: var(--faint); }
+  .pill small { color: var(--faint); font-size: 12px; font-weight: 500; }
+  .pill[aria-pressed=true] { background: var(--on); border-color: var(--on); color: var(--on-text); } .pill[aria-pressed=true] small { color: inherit; opacity: .55; }
+  .dot { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 1px rgb(127 127 127 / .45); }
+  .row2 { display: flex; gap: 10px; align-items: center; min-width: 0; }
+  .search { position: relative; flex: 1 1 240px; max-width: 320px; margin-left: auto; }
+  .search input { width: 100%; height: 34px; padding: 0 38px 0 34px; border: 1px solid var(--line); border-radius: 999px; background: var(--raise); font-size: 13.5px; outline: none; }
+  .search input:focus { border-color: var(--faint); } .search svg { position: absolute; left: 11px; top: 9px; width: 16px; height: 16px; color: var(--faint); } .search kbd { position: absolute; right: 10px; top: 7px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .card { position: relative; display: flex; flex-direction: column; min-width: 0; border-radius: 18px; background: var(--card); outline: 1px solid var(--line); outline-offset: -1px; overflow: hidden; transition: outline-color .15s; }
+  .card:hover { outline-color: var(--faint); }
+  .view { position: relative; aspect-ratio: 1 / .86; background: var(--paper); overflow: hidden; }
+  .view img, .view video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 6%; transition: opacity .2s, transform .35s cubic-bezier(.2, .8, .2, 1); }
+  .view video { opacity: 0; } .view video.on { opacity: 1; }
+  .card:hover .view img, .card:hover .view video { transform: scale(1.025); }
+  .view iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; background: var(--paper); opacity: 0; transition: opacity .25s; }
+  .view.live iframe.ready { opacity: 1; } .view.live img.gone, .view.live video { opacity: 0; }
+  .live-tag { position: absolute; z-index: 1; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 5px; height: 22px; padding: 0 8px; border-radius: 999px; background: rgb(0 0 0 / .55); color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .02em; opacity: 0; transition: opacity .2s; pointer-events: none; }
+  .live-tag::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: #3ddc84; }
+  .view.live .live-tag { opacity: 1; }
+  .meta { display: flex; align-items: center; gap: 10px; padding: 11px 14px 12px; border-top: 1px solid var(--line); }
+  .meta h3 { margin: 0; min-width: 0; font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .meta .set { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; flex: none; color: var(--mute); font-size: 12px; }
+  .meta a::after { content: ""; position: absolute; inset: 0; z-index: 1; } /* the whole card opens the page… */
+  .view.live { z-index: 2; } /* …except the live frame, which is for playing */
+  .open { position: absolute; right: 10px; top: 10px; z-index: 3; display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 11px; border: 0; border-radius: 999px; background: rgb(0 0 0 / .62); color: #fff; font-size: 12px; font-weight: 600; opacity: 0; transform: translateY(-4px); transition: opacity .18s, transform .18s; }
+  .card:hover .open, .card:focus-within .open { opacity: 1; transform: none; }
+  .empty { padding: 60px 0; text-align: center; color: var(--mute); }
+
+  /* control page */
+  .doc { display: grid; grid-template-columns: 236px minmax(0, 1fr); gap: 44px; max-width: 1240px; margin: 0 auto; padding: 28px max(16px, env(safe-area-inset-left)) 96px; }
+  .doc > main { min-width: 0; }
+  .side { position: sticky; top: 84px; align-self: start; max-height: calc(100vh - 100px); overflow-y: auto; scrollbar-width: thin; padding-right: 6px; }
+  .side h4 { display: flex; align-items: center; gap: 8px; margin: 20px 0 6px; padding: 0 10px; color: var(--mute); font-size: 12px; font-weight: 550; }
+  .side h4:first-child { margin-top: 0; }
+  .side a { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 9px; font-size: 13.5px; color: var(--mute); }
+  .side a:hover { color: var(--text); background: var(--chip); } .side a[aria-current] { color: var(--text); background: var(--chip); font-weight: 550; }
+  .side a img { flex: none; width: 26px; height: 22px; border-radius: 6px; object-fit: cover; background: var(--paper); outline: 1px solid var(--line); }
+  .top { display: flex; align-items: center; gap: 12px; }
+  .crumb { display: flex; align-items: center; gap: 8px; color: var(--mute); font-size: 13px; } .crumb a:hover { color: var(--text); }
+  .step { margin-left: auto; display: flex; gap: 6px; }
+  .doc h1 { margin: 18px 0 0; font-size: clamp(28px, 4vw, 38px); line-height: 1.1; font-weight: 650; letter-spacing: -.03em; }
+  .doc h1 code { display: inline-block; margin-left: 10px; padding: 2px 8px; border: 1px solid var(--line); border-radius: 8px; font: 500 13px/1.5 ui-monospace, "SF Mono", Menlo, monospace; color: var(--mute); vertical-align: 7px; letter-spacing: 0; }
+  .lede { max-width: 720px; margin: 12px 0 0; color: var(--mute); font-size: 16px; }
+  .acts { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 22px 0 12px; }
+  .tabs { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: var(--chip); }
+  .tabs button { height: 30px; padding: 0 14px; border: 0; border-radius: 999px; background: none; font-size: 13px; font-weight: 550; color: var(--mute); }
+  .tabs button[aria-selected=true] { background: var(--raise); color: var(--text); box-shadow: 0 1px 2px rgb(0 0 0 / .25); }
+  .acts .right { margin-left: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn { display: inline-flex; align-items: center; gap: 7px; height: 34px; padding: 0 13px; border: 1px solid var(--line); border-radius: 999px; background: var(--raise); font-size: 13px; font-weight: 550; }
+  .btn:hover { border-color: var(--faint); } .btn svg { width: 15px; height: 15px; } .btn.main { background: var(--on); border-color: var(--on); color: var(--on-text); }
+  .stage { position: relative; display: grid; place-items: center; min-height: 420px; padding: 32px 16px; border-radius: 20px; background: var(--paper); outline: 1px solid var(--line); outline-offset: -1px; overflow: hidden; }
+  .stage .fit { position: relative; }
+  .stage iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; background: var(--paper); }
+  .stage .reload { position: absolute; right: 12px; bottom: 12px; background: rgb(0 0 0 / .55); border-color: transparent; color: #fff; }
+  .panel { margin-top: 14px; border-radius: 16px; background: var(--raise); outline: 1px solid var(--line); outline-offset: -1px; }
+  .panel + .panel { margin-top: 12px; }
+  .panel header { display: flex; align-items: center; gap: 10px; padding: 12px 14px 0 18px; color: var(--mute); font-size: 12px; font-weight: 550; letter-spacing: .05em; text-transform: uppercase; }
+  .panel header .btn { margin-left: auto; height: 30px; text-transform: none; letter-spacing: 0; color: var(--text); }
+  .panel pre { margin: 0; padding: 12px 18px 18px; overflow-x: auto; font: 13px/1.65 ui-monospace, "SF Mono", Menlo, Consolas, monospace; white-space: pre; }
+  .panel p { margin: 0; padding: 10px 18px 18px; color: var(--mute); font-size: 14px; }
+  .panel p a { color: var(--text); border-bottom: 1px solid var(--line); }
+  .t-tag { color: #7aa2ff; } .t-attr { color: #e5b567; } .t-str { color: #9ece6a; } .t-com { color: var(--faint); }
+  :root[data-theme=light] .t-tag { color: #2457d6; } :root[data-theme=light] .t-attr { color: #9a5b00; } :root[data-theme=light] .t-str { color: #2e7d32; }
+  .about { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 12px; }
+  .about div { padding: 14px 18px; border-radius: 16px; background: var(--raise); outline: 1px solid var(--line); outline-offset: -1px; font-size: 13.5px; }
+  .about dt { color: var(--mute); font-size: 12px; } .about dd { margin: 3px 0 0; }
+  .next { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
+  .next a { padding: 14px 18px; border-radius: 16px; outline: 1px solid var(--line); outline-offset: -1px; } .next a:hover { background: var(--raise); }
+  .next small { display: block; color: var(--mute); font-size: 12px; } .next b { font-weight: 600; } .next a:last-child { text-align: right; }
+  .toast { position: fixed; left: 50%; bottom: 24px; z-index: 50; padding: 9px 16px; border-radius: 999px; background: var(--on); color: var(--on-text); font-size: 13px; font-weight: 550; transform: translate(-50%, 20px); opacity: 0; transition: .2s; pointer-events: none; }
+  .toast.on { transform: translate(-50%, 0); opacity: 1; }
+
+  @media (max-width: 900px) {
+    .doc { grid-template-columns: minmax(0, 1fr); gap: 0; } .side { display: none; }
+    .acts .right { margin-left: 0; width: 100%; }
+  }
+  @media (max-width: 600px) {
+    .bar nav { display: none; } .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .meta { padding: 9px 11px 10px; } .meta .set span { display: none; } .open { display: none; }
+    .search { max-width: none; } .row2 { flex-wrap: wrap; } .stage { min-height: 300px; padding: 20px 8px; }
+  }
+  @media (max-width: 380px) { .grid { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <h1>UI sets</h1>
-    <p class="lede">Themed sets of ordinary web controls, each drawn a different way. Every control is a single file that defines a custom element: no dependencies, no build step, and a real control underneath.</p>
-    <p class="by"><span>By Justin Finkelman</span><a href="library/">finktheartist's UI Library</a><a href="https://x.com/crtvTeknologist" target="_blank" rel="noopener">@crtvTeknologist on X</a><a href="https://github.com/finktheartist" target="_blank" rel="noopener">GitHub</a></p>
-  </header>
-  <main class="sets" id="sets" aria-live="polite"></main>
-  <p class="foot">Install any control with the shadcn CLI, or copy its file and load it with a plain script tag. Each set also ships the workflow it was made by as a skill for a coding agent, and an <code>llms.txt</code>.</p>
-</div>
-<script>
-// The sets come from sets.json. With ?local the links and the live demos point at copies of the sets under _sets/ on this
-// server (see the README), which is how the page is previewed before a set is deployed.
-const LOCAL = new URLSearchParams(location.search).has('local'), narrow = matchMedia('(max-width: 520px)');
-// a demo's height is one number, or two: for a wide frame and for a phone-width one
-const tall = (d) => (Array.isArray(d.height) ? d.height[narrow.matches ? 1 : 0] : +d.height || 300);
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const base = (s) => (LOCAL ? `_sets/${s.id}/` : s.url.replace(/\/?$/, '/'));
+<header class="bar" id="bar">
+  <a class="brand" href="#/" aria-label="finktheartist's UI Library, all controls"><i aria-hidden="true"><b style="background:#000;outline:1px solid #555"></b><b style="background:#ecd7ac"></b><b style="background:#fff"></b><b style="background:#efe6d2"></b></i>finktheartist's <span>UI Library</span></a>
+  <nav><a href="#/" id="nav-lib">Library</a><a href="sets/" id="nav-sets">Sets</a><a href="https://github.com/finktheartist" target="_blank" rel="noopener">GitHub</a></nav>
+  <div class="end">
+    <button class="icon" id="motion" type="button" aria-pressed="false" aria-label="Pause the card loops" title="Pause the card loops"></button>
+    <button class="icon" id="theme" type="button" aria-label="Switch light and dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
+  </div>
+</header>
 
-fetch('sets.json').then((r) => r.json()).then(({ sets }) => {
-  const root = document.getElementById('sets');
-  for (const s of sets) {
-    const live = LOCAL || s.status === 'live', first = s.demos?.[0], cmd = `npx shadcn add ${s.repo}/${first ? first.path.replace(/\/$/, '') : 'NAME'}`;
-    const el = document.createElement('article'); el.className = 'set'; el.id = s.id; if (s.paper) el.style.setProperty('--paper', s.paper);
-    el.innerHTML = `
-      <div class="view"><img src="posters/${esc(s.id)}.jpg" alt="The ${esc(s.name)} gallery" loading="lazy" width="1200" height="750"></div>
-      <div class="info">
-        <h2>${esc(s.name)}${live ? '' : '<span class="soon">Coming soon</span>'}</h2>
-        <p class="tag">${esc(s.tagline)}</p>
-        <ul class="meta"><li>${s.count} controls</li><li>${esc(s.made)}</li><li>MIT</li></ul>
-        ${live && s.demos?.length ? `<div class="try"><p id="try-${esc(s.id)}">Try one here</p><div class="seg" role="group" aria-labelledby="try-${esc(s.id)}">${s.demos.map((d, i) => `<button type="button" aria-pressed="false" data-i="${i}">${esc(d.name)}</button>`).join('')}</div></div>` : ''}
-        ${live ? `<div class="install"><p>Install one</p><div class="cmd"><code>${esc(cmd)}</code><button type="button" data-copy="${esc(cmd)}">Copy</button></div></div>` : ''}
-        <p class="links">${live ? `<a class="btn main" href="${esc(base(s))}">Open the gallery</a>` : ''}<a class="btn" href="https://github.com/${esc(s.repo)}" target="_blank" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a></p>
-        <span class="sr" role="status"></span>
-      </div>`;
-    root.append(el);
-    // a demo button swaps the poster for that control, live, in a frame; pressing it again brings the poster back
-    const view = el.querySelector('.view'), poster = view.innerHTML, status = el.querySelector('[role=status]');
-    el.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
-      const d = s.demos[+b.dataset.i], on = b.getAttribute('aria-pressed') !== 'true';
-      el.querySelectorAll('.seg button').forEach((o) => o.setAttribute('aria-pressed', String(o === b && on)));
-      view.innerHTML = on ? `<div class="live"><iframe src="${esc(base(s) + d.path)}?embed=1" height="${tall(d)}" title="${esc(s.name)}: ${esc(d.name)}, live" loading="lazy"></iframe></div>` : poster;
-      status.textContent = on ? `${d.name} is live in the frame.` : 'Poster shown.';
-    }));
-    el.querySelector('[data-copy]')?.addEventListener('click', async (e) => {
-      const b = e.currentTarget, text = b.dataset.copy; let ok = false;
-      // the clipboard API needs https (or localhost), so fall back to a selected textarea
-      try { await navigator.clipboard.writeText(text); ok = true; } catch {
-        const t = Object.assign(document.createElement('textarea'), { value: text }); t.style.cssText = 'position:fixed;opacity:0'; document.body.append(t); t.select();
-        try { ok = document.execCommand('copy'); } catch {} t.remove();
-      }
-      b.textContent = ok ? 'Copied' : 'Select it'; status.textContent = ok ? 'Install command copied.' : 'Could not copy here.'; setTimeout(() => { b.textContent = 'Copy'; }, 1600);
-    });
+<div id="lib" class="wrap" hidden>
+  <div class="head">
+    <div><h2>The library</h2><p>Hover to try it, click to open it and take its code.</p></div>
+    <div class="count"><b id="count">–</b>controls</div>
+  </div>
+  <div class="tools">
+    <div class="row" id="kinds" role="group" aria-label="Filter by what the control is for"></div>
+    <div class="row2">
+      <div class="row" id="sets" role="group" aria-label="Filter by set"></div>
+      <label class="search"><span class="sr">Search controls</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" placeholder="Search controls" autocomplete="off"><kbd>/</kbd></label>
+    </div>
+  </div>
+  <div class="grid" id="grid" aria-live="polite"></div>
+  <p class="empty" id="empty" hidden>Nothing matches. <button class="btn" id="clear" type="button">Clear filters</button></p>
+</div>
+
+<div id="doc" class="doc" hidden>
+  <aside class="side" id="side" aria-label="All controls"></aside>
+  <main id="page"></main>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const LOCAL = new URLSearchParams(location.search).has('local');
+const $ = (s, el = document) => el.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const KINDS = ['Buttons', 'Inputs', 'Selection', 'Navigation', 'Loading', 'Feedback', 'Status'];
+const ICON = {
+  left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>',
+  right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>',
+  ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+  gh: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.6.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.6s.8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .4 1 .2 2 .1 2.6a3.9 3.9 0 0 1 1 2.7c0 3.9-2.3 4.7-4.6 5 .4.3.7 1 .7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
+  resume: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5.5v13a1 1 0 0 0 1.5.9l10.5-6.5a1 1 0 0 0 0-1.8L8.5 4.6A1 1 0 0 0 7 5.5Z"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>',
+};
+
+// theme: dark unless the reader picked light (remembered on this device only)
+const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
+const setTheme = (t) => { document.documentElement.dataset.theme = t; store.set('lib-theme', t); };
+setTheme(store.get('lib-theme') || 'dark');
+$('#theme').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+addEventListener('scroll', () => $('#bar').classList.toggle('scrolled', scrollY > 4), { passive: true });
+
+let SETS = {}, ALL = [];
+const state = { kind: 'All', set: 'All', q: '' };
+const base = (c) => (LOCAL ? `_sets/${c.set}/` : SETS[c.set].url.replace(/\/?$/, '/'));
+const demoUrl = (c) => `${base(c)}${c.demo}?embed=1`;
+const thumb = (c) => `library/thumbs/${c.set}--${c.name}.webp`;
+const size = (c) => (c.size ? [c.size.w, c.size.h] : [640, 360]);
+const crop = (c) => c.size?.box || [0, 0, ...size(c)];
+const href = (c) => `#/${c.id}`;
+
+function toast(t) { const el = $('#toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 1600); }
+async function copy(text, label) {
+  try { await navigator.clipboard.writeText(text); }
+  catch { const ta = Object.assign(document.createElement('textarea'), { value: text }); document.body.append(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+  toast(`${label} copied`);
+}
+
+// ---------- loops ----------
+// Each card plays a short recording of its control being used, while at least half of it is on screen. They start paused
+// for anyone who asks for reduced motion, and the pause button in the bar stops them all (remembered on this device).
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+let paused = store.get('lib-loops') ? store.get('lib-loops') === 'off' : reduce.matches;
+const loops = new IntersectionObserver((es) => es.forEach((e) => { e.target._seen = e.isIntersecting; playLoop(e.target); }), { threshold: .5 });
+function playLoop(v) {
+  if (v._seen && !paused) { if (v.preload !== 'auto') v.preload = 'auto'; v.play().then(() => v.classList.add('on')).catch(() => {}); }
+  else v.pause();
+}
+function setPaused(p, save) {
+  paused = p; if (save) store.set('lib-loops', p ? 'off' : 'on');
+  const b = $('#motion'); b.innerHTML = p ? ICON.resume : ICON.pause; b.setAttribute('aria-pressed', p);
+  b.title = b.ariaLabel = p ? 'Play the card loops' : 'Pause the card loops';
+  document.querySelectorAll('#grid video').forEach(playLoop);
+}
+$('#motion').onclick = () => setPaused(!paused, true);
+
+// ---------- grid ----------
+function filtered() {
+  const q = state.q.trim().toLowerCase();
+  return ALL.filter((c) => (state.kind === 'All' || c.kind === state.kind) && (state.set === 'All' || c.set === state.set)
+    && (!q || `${c.title} ${c.name} ${c.kind} ${SETS[c.set].name} ${c.tag} ${c.description}`.toLowerCase().includes(q)));
+}
+function pills() {
+  const inSet = ALL.filter((c) => state.set === 'All' || c.set === state.set), inKind = ALL.filter((c) => state.kind === 'All' || c.kind === state.kind);
+  $('#kinds').innerHTML = ['All', ...KINDS].map((k) => `<button class="pill" type="button" data-kind="${k}" aria-pressed="${state.kind === k}">${k} <small>${k === 'All' ? inSet.length : inSet.filter((c) => c.kind === k).length}</small></button>`).join('');
+  $('#sets').innerHTML = [['All', 'All sets'], ...Object.values(SETS).map((s) => [s.id, s.name])].map(([id, n]) =>
+    `<button class="pill" type="button" data-set="${id}" aria-pressed="${state.set === id}">${id === 'All' ? '' : `<span class="dot" style="background:${SETS[id].paper}"></span>`}${esc(n)} <small>${id === 'All' ? inKind.length : inKind.filter((c) => c.set === id).length}</small></button>`).join('');
+}
+function renderGrid() {
+  pills();
+  const list = filtered(), grid = $('#grid');
+  $('#count').textContent = list.length;
+  $('#empty').hidden = list.length > 0;
+  loops.disconnect();
+  grid.innerHTML = list.map((c) => `<article class="card" data-id="${c.id}" style="--paper:${c.size?.bg || SETS[c.set].paper}">
+    <div class="view"><img src="${thumb(c)}" alt="" loading="lazy" decoding="async">${c.loop ? `<video src="library/loops/${c.set}--${c.name}.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>` : ''}<span class="live-tag">Live</span></div>
+    <a class="open" href="${href(c)}" tabindex="-1">Open ${ICON.right.replace('<svg', '<svg width="13" height="13"')}</a>
+    <div class="meta"><h3><a href="${href(c)}">${esc(c.title)}</a></h3><span class="set"><span class="dot" style="background:${SETS[c.set].paper}"></span><span>${esc(SETS[c.set].name)}</span></span></div>
+  </article>`).join('');
+  grid.querySelectorAll('video').forEach((v) => loops.observe(v));
+}
+$('#kinds').onclick = (e) => { const b = e.target.closest('[data-kind]'); if (b) { state.kind = b.dataset.kind; renderGrid(); } };
+$('#sets').onclick = (e) => { const b = e.target.closest('[data-set]'); if (b) { state.set = b.dataset.set; renderGrid(); } };
+$('#q').oninput = (e) => { state.q = e.target.value; renderGrid(); };
+$('#clear').onclick = () => { Object.assign(state, { kind: 'All', set: 'All', q: '' }); $('#q').value = ''; renderGrid(); };
+
+// Hover a card (with a mouse) for a moment and the still becomes the live control, scaled to fit the card.
+// Only the hovered card is live, so the page never runs more than a couple of controls at once.
+const canHover = matchMedia('(hover: hover) and (pointer: fine)');
+let liveCard = null, hoverT = 0;
+// the live frame is the whole demo page, scaled and moved so the same crop as the still fills the card
+function fitFrame(frame, view, c) {
+  const [w, h] = size(c), [x, y, cw, ch] = crop(c), W = view.clientWidth, H = view.clientHeight;
+  const s = Math.min(W / cw, H / ch, 1.6) * .88; // the same margin the still has
+  frame.style.width = `${w}px`; frame.style.height = `${h}px`;
+  frame.style.transform = `translate(${W / 2}px, ${H / 2}px) scale(${s}) translate(${-(x + cw / 2)}px, ${-(y + ch / 2)}px)`;
+}
+function goLive(card) {
+  if (liveCard === card) return;
+  sleep(liveCard); liveCard = card;
+  const c = ALL.find((x) => x.id === card.dataset.id), view = $('.view', card);
+  const f = Object.assign(document.createElement('iframe'), { src: demoUrl(c), title: `${c.title}, live` });
+  f.onload = () => { f.classList.add('ready'); $('img', view).classList.add('gone'); };
+  view.append(f); view.classList.add('live'); fitFrame(f, view, c);
+  $('video', view)?.pause();
+}
+function sleep(card) {
+  if (!card) return;
+  const view = $('.view', card); view?.classList.remove('live'); $('iframe', view)?.remove(); $('img', view)?.classList.remove('gone');
+  const v = $('video', view); if (v) playLoop(v);
+  if (liveCard === card) liveCard = null;
+}
+$('#grid').addEventListener('pointerover', (e) => {
+  if (!canHover.matches) return;
+  const card = e.target.closest('.card'); if (!card || card === liveCard) return;
+  clearTimeout(hoverT); hoverT = setTimeout(() => goLive(card), 220);
+});
+$('#grid').addEventListener('pointerout', (e) => {
+  const card = e.target.closest('.card'); if (!card || card.contains(e.relatedTarget)) return;
+  clearTimeout(hoverT); if (card === liveCard) hoverT = setTimeout(() => sleep(card), 250);
+});
+// without a mouse, a tap anywhere on the card opens its page
+$('#grid').addEventListener('click', (e) => { const card = e.target.closest('.card'); if (card && !e.target.closest('a')) location.hash = `#/${card.dataset.id}`; });
+addEventListener('resize', () => { if (liveCard) { const v = $('.view', liveCard), f = $('iframe', v); if (f) fitFrame(f, v, ALL.find((x) => x.id === liveCard.dataset.id)); } });
+
+// ---------- a control's page ----------
+function hl(code) {
+  return esc(code).replace(/(&lt;!--.*?--&gt;)/g, '<span class="t-com">$1</span>')
+    .replace(/(&lt;\/?)([a-z][\w-]*)/g, '$1<span class="t-tag">$2</span>')
+    .replace(/ ([a-z][\w-]*)=(&quot;.*?&quot;)/g, ' <span class="t-attr">$1</span>=<span class="t-str">$2</span>');
+}
+function usage(c) {
+  const m = c.docs.match(/<([a-z]+(?:-[a-z]+)+)[^>]*>(?:[^<]*<\/\1>)?/);
+  const el = m ? m[0] : `<${c.tag}></${c.tag}>`;
+  return `<script src="${c.script}"><\/script>\n\n${el.includes('</') ? el : `${el}</${m ? m[1] : c.tag}>`}`;
+}
+function prompt(c) {
+  const s = SETS[c.set];
+  return [`Add the ${c.title} control from ${s.name} to my app. It is a single JavaScript file with no dependencies that defines a <${c.tag}> element.`,
+    `1. Get the file from ${s.url.replace(/\/?$/, '/')}${c.file} and save it in my site's public files at ${c.script.replace(/^\//, '')}, so it is served at ${c.script}. Do not rewrite it or split it up.`,
+    `2. Load it with a plain script tag (not type="module").`,
+    `3. ${c.docs.replace(/^.*?registers a custom element\.\s*/, '')}`,
+    `What it does: ${c.description}`,
+    `Docs and a live demo: ${s.url.replace(/\/?$/, '/')}${c.demo}`,
+    `When you are done, show me where you put it and what listens to it. If it needs to look different, tell me instead of editing its art or effects.`].join('\n');
+}
+function renderSide(cur) {
+  $('#side').innerHTML = Object.values(SETS).map((s) => `<h4><span class="dot" style="background:${s.paper}"></span>${esc(s.name)}</h4>` +
+    ALL.filter((c) => c.set === s.id).map((c) => `<a href="${href(c)}" ${c.id === cur.id ? 'aria-current="page"' : ''} style="--paper:${s.paper}"><img src="${thumb(c)}" alt="" loading="lazy">${esc(c.title)}</a>`).join('')).join('');
+  const a = $('#side [aria-current]'); if (a) { const side = $('#side'); if (a.offsetTop < side.scrollTop || a.offsetTop > side.scrollTop + side.clientHeight - 40) side.scrollTop = a.offsetTop - 120; }
+}
+function renderDoc(c) {
+  const s = SETS[c.set], i = ALL.indexOf(c), prev = ALL[(i - 1 + ALL.length) % ALL.length], next = ALL[(i + 1) % ALL.length];
+  const gh = `https://github.com/${s.repo}`, ghFile = `${gh}/blob/main/${c.file}`;
+  document.title = `${c.title} · ${s.name} · finktheartist\'s UI Library`;
+  renderSide(c);
+  $('#page').style.setProperty('--paper', s.paper);
+  $('#page').innerHTML = `
+    <div class="top"><nav class="crumb" aria-label="Breadcrumb"><a href="#/">Library</a><span>/</span><a href="#/" data-goset="${s.id}">${esc(s.name)}</a><span>/</span><span>${esc(c.kind)}</span></nav>
+      <div class="step"><a class="icon" href="${href(prev)}" aria-label="Previous: ${esc(prev.title)}" title="${esc(prev.title)}  ←">${ICON.left}</a><a class="icon" href="${href(next)}" aria-label="Next: ${esc(next.title)}" title="${esc(next.title)}  →">${ICON.right}</a></div></div>
+    <h1>${esc(c.title)}<code>&lt;${esc(c.tag)}&gt;</code></h1>
+    <p class="lede">${esc(c.description)}</p>
+    <div class="acts">
+      <div class="tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="preview">Preview</button><button type="button" role="tab" aria-selected="false" data-tab="install">Install</button></div>
+      <div class="right"><button class="btn" type="button" data-copy="prompt">${ICON.copy}Copy prompt</button><a class="btn" href="${base(c)}${c.demo}" target="_blank" rel="noopener">${ICON.ext}Demo page</a><a class="btn" href="${ghFile}" target="_blank" rel="noopener">${ICON.gh}Source</a></div>
+    </div>
+    <section data-pane="preview">
+      <div class="stage" id="stage"><div class="fit" id="fit"><iframe src="${demoUrl(c)}" title="${esc(c.title)}, live"></iframe></div><button class="icon reload" type="button" aria-label="Replay" title="Replay">${ICON.play}</button></div>
+      <div class="panel"><header>Use it<button class="btn" type="button" data-copy="usage">${ICON.copy}Copy</button></header><pre><code>${hl(usage(c))}</code></pre><p>${esc(c.docs.replace(/^.*?registers a custom element\.\s*/, ''))}</p></div>
+    </section>
+    <section data-pane="install" hidden>
+      <div class="panel"><header>With the shadcn CLI<button class="btn" type="button" data-copy="install">${ICON.copy}Copy</button></header><pre><code>${esc(c.install)}</code></pre><p>It copies the one file into <code>public${esc(c.script.replace(/\/[^/]+$/, '/'))}</code>. No packages are added.</p></div>
+      <div class="panel"><header>Or copy the file</header><p>Download <a href="${ghFile}" target="_blank" rel="noopener">${esc(c.file)}</a> from GitHub, put it anywhere your site serves files, and load it with a script tag. Everything it needs, art included, is inside it.</p></div>
+      <div class="panel"><header>Or hand it to your agent<button class="btn" type="button" data-copy="prompt">${ICON.copy}Copy prompt</button></header><p>A prompt that tells a coding agent where the file is, how to load it and what to listen for.</p></div>
+    </section>
+    <dl class="about">
+      <div><dt>Set</dt><dd><a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a></dd></div>
+      <div><dt>Made with</dt><dd>${esc(s.made)}</dd></div>
+      <div><dt>Repo</dt><dd><a href="${gh}" target="_blank" rel="noopener">${esc(s.repo)}</a></dd></div>
+    </dl>
+    <nav class="next" aria-label="More controls"><a href="${href(prev)}"><small>← Previous</small><b>${esc(prev.title)}</b> <small>${esc(SETS[prev.set].name)}</small></a><a href="${href(next)}"><small>Next →</small><b>${esc(next.title)}</b> <small>${esc(SETS[next.set].name)}</small></a></nav>`;
+  const fit = () => { const st = $('#stage'), w = st.clientWidth - 32, [fw, fh] = size(c), sc = Math.min(1, w / fw); $('#fit').style.cssText = `width:${fw * sc}px;height:${fh * sc}px`; $('#stage iframe').style.cssText = `width:${fw}px;height:${fh}px;transform:scale(${sc})`; };
+  fit(); renderDoc.fit = fit;
+  $('#page').onclick = (e) => {
+    const t = e.target.closest('[data-tab],[data-copy],.reload,[data-goset]'); if (!t) return;
+    if (t.dataset.tab) { $('#page').querySelectorAll('[data-tab]').forEach((b) => b.setAttribute('aria-selected', b === t)); $('#page').querySelectorAll('[data-pane]').forEach((p) => (p.hidden = p.dataset.pane !== t.dataset.tab)); }
+    else if (t.dataset.copy) copy({ usage: usage(c), install: c.install, prompt: prompt(c) }[t.dataset.copy], { usage: 'Code', install: 'Install command', prompt: 'Prompt' }[t.dataset.copy]);
+    else if (t.classList.contains('reload')) { const f = $('#stage iframe'); f.src = f.src; }
+    else if (t.dataset.goset) { state.set = t.dataset.goset; state.kind = 'All'; }
+  };
+}
+addEventListener('resize', () => { if (!$('#doc').hidden) renderDoc.fit?.(); });
+
+// ---------- routing ----------
+let lastGridY = 0;
+function route() {
+  const id = location.hash.replace(/^#\/?/, ''), c = ALL.find((x) => x.id === id);
+  const toDoc = !!c, wasGrid = !$('#lib').hidden;
+  if (toDoc && wasGrid) lastGridY = scrollY;
+  sleep(liveCard);
+  $('#lib').hidden = toDoc; $('#doc').hidden = !toDoc;
+  $('#nav-lib').toggleAttribute('aria-current', !toDoc);
+  if (c) { renderDoc(c); scrollTo(0, 0); $('h1', $('#page')).focus?.(); }
+  else { document.title = "finktheartist's UI Library"; renderGrid(); if (!wasGrid) requestAnimationFrame(() => scrollTo(0, lastGridY)); }
+}
+addEventListener('hashchange', route);
+addEventListener('keydown', (e) => {
+  if (e.target.closest('input, textarea, iframe') || e.metaKey || e.ctrlKey || e.altKey) { if (e.key === 'Escape' && e.target.id === 'q') e.target.blur(); return; }
+  if (e.key === '/' && !$('#lib').hidden) { e.preventDefault(); $('#q').focus(); }
+  if (!$('#doc').hidden) {
+    if (e.key === 'Escape') location.hash = '#/';
+    if (e.key === 'ArrowLeft') $('.step a:first-child')?.click();
+    if (e.key === 'ArrowRight') $('.step a:last-child')?.click();
   }
-}).catch(() => { document.getElementById('sets').innerHTML = '<p>Could not load the list of sets.</p>'; });
+});
+
+setPaused(paused);
+fetch('library/components.json').then((r) => r.json()).then((d) => {
+  SETS = Object.fromEntries(d.sets.map((s) => [s.id, s])); ALL = d.components;
+  if (LOCAL) document.querySelectorAll('a[href="sets/"]').forEach((a) => (a.href = 'sets/?local'));
+  route();
+});
 </script>
 </body>
 </html>
