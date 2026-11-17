@@ -1,6 +1,6 @@
 # finktheartist's UI Library
 
-Every control from every component set on one page. Each card loops a short recording of its control being used; hover one to try the real thing, and open it for the install line, the code and a prompt for a coding agent. A second page, `sets/`, lists the sets themselves with a poster each. Each set lives in its own repo and its own deployment; this site only points at them.
+Every control from every component set on one page. Each card loops a short recording of its control being used; hover one to try the real thing, and open it for the install line, the code and a prompt for a coding agent. A second page, `sets/`, lists the sets themselves, each shown as four of its controls playing their loops. Both pages share the top bar, the colours and the light/dark and pause buttons (`site.css`, `site.js`). Each set lives in its own repo and its own deployment; this site only points at them.
 
 Live: https://ui-sets.vercel.app (the sets: https://ui-sets.vercel.app/sets/)
 
@@ -9,14 +9,14 @@ Live: https://ui-sets.vercel.app (the sets: https://ui-sets.vercel.app/sets/)
 | `index.html` | the library |
 | `library/` | its data: `components.json`, the stills in `thumbs/` and the loops in `loops/` |
 | `sets/index.html` | the page that lists the sets |
-| `sets.json`, `posters/` | the sets, and a poster for each |
+| `sets.json` | the sets |
+| `site.css`, `site.js` | the top bar, colours and theme shared by both pages |
 | `tools/` | the scripts that build `library/` (below) |
 
 ## Add a set
 
 1. Add an entry to `sets.json`. The first entry is shown first.
-2. Put a poster at `posters/ID.jpg`, 1200 by 750, where `ID` is the entry's `id`.
-3. Rebuild the library (below) so its controls appear in it.
+2. Rebuild the library (below) so its controls, and its four tiles on the sets page, appear.
 
 ```json
 {
@@ -38,8 +38,8 @@ Live: https://ui-sets.vercel.app (the sets: https://ui-sets.vercel.app/sets/)
 | `url` | where the set is deployed. "Open the gallery" goes here, and the demos are framed from here. |
 | `repo` | `owner/name` on GitHub, for the GitHub link and the install command. |
 | `status` | `live`, or `soon` for a set that is not deployed yet: the card shows "Coming soon" with only its GitHub link. |
-| `paper` | the set's own background colour, shown behind its poster and its demo frame. |
-| `demos` | controls to try on this page. `path` is the control's demo page in the set (it is loaded with `?embed=1`), and `height` is the frame's height in pixels, or `[wide, narrow]` if the control is laid out differently on a phone. The first demo is the one in the install command. |
+| `paper` | the set's own background colour, used for its dot and its live demo frame. |
+| `demos` | the four controls in the set's mosaic and its "Try one here" buttons. `path` is the control's demo page in the set (it is loaded with `?embed=1`), and `height` is the frame's height in pixels, or `[wide, narrow]` if the control is laid out differently on a phone. The first demo is the one in the install command. |
 
 A set needs a demo page per control that accepts `?embed=1` and hides its heading, and a `registry.json` listing its controls. The four sets here all do.
 
@@ -71,10 +71,6 @@ mkdir -p _sets && ln -s ../../rubber-hose-ui _sets/rubber-hose-ui     # the fold
 ```
 
 With `?local` every set is treated as live and its links and frames point at `_sets/ID/`.
-
-## The posters
-
-Each is a screenshot of the top of the set's gallery at 1200 by 750. Any image that size works.
 
 ## License
 

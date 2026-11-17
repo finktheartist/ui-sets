@@ -5,36 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>finktheartist's UI Library</title>
 <meta name="description" content="Every control from every UI set on one page. Hover a card to play with it, open it for the install line and the code.">
+<script>try { document.documentElement.dataset.theme = localStorage.getItem('lib-theme') || 'dark'; } catch { document.documentElement.dataset.theme = 'dark'; }</script>
+<link rel="stylesheet" href="site.css">
 <style>
   /* Every control from every set, as one library. Two views on one page:
      the grid (#/), where each card is a still that turns into the live control while you hover it, and
      a control's own page (#/SET/NAME), with every control in a sidebar, the control live, and the install line and code.
      The data is library/components.json, built from each set's registry.json by tools/library.mjs, with the stills and loops
-     beside it in library/. ?local frames the sets from _sets/. The page that lists the sets themselves is sets/. */
-  :root { color-scheme: dark; --page: #111113; --raise: #19191c; --card: #1d1d21; --text: #f2f2f4; --mute: #8e8e98; --faint: #5d5d66; --line: #2a2a30; --chip: #232328; --on: #f2f2f4; --on-text: #111113; }
-  :root[data-theme=light] { color-scheme: light; --page: #f5f5f3; --raise: #ffffff; --card: #ffffff; --text: #17171a; --mute: #6b6b74; --faint: #a1a1a8; --line: #e3e3e6; --chip: #ededee; --on: #17171a; --on-text: #ffffff; }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; overflow-x: clip; background: var(--page); scrollbar-gutter: stable; }
-  body { margin: 0; color: var(--text); background: var(--page); font: 400 15px/1.5 -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: clip; }
-  a { color: inherit; text-decoration: none; } button, input { font: inherit; color: inherit; }
-  button { cursor: pointer; }
-  :focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 8px; }
-  [hidden] { display: none !important; }
-  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-  kbd { padding: 1px 5px; border: 1px solid var(--line); border-radius: 5px; font: 11px/1.4 ui-monospace, "SF Mono", Menlo, monospace; color: var(--mute); }
-
-  /* top bar */
-  .bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 18px; height: 56px; padding: 0 max(16px, env(safe-area-inset-left)); background: color-mix(in srgb, var(--page) 86%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid transparent; transition: border-color .2s; }
-  .bar.scrolled { border-bottom-color: var(--line); }
-  .brand { display: flex; align-items: center; gap: 8px; font-weight: 650; letter-spacing: -.01em; }
-  .brand i { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 16px; height: 16px; }
-  .brand i b { border-radius: 2px; } .brand span { color: var(--mute); font-weight: 450; }
-  .bar nav { display: flex; gap: 4px; font-size: 13.5px; }
-  .bar nav a { padding: 6px 10px; border-radius: 8px; color: var(--mute); } .bar nav a:hover, .bar nav a[aria-current] { color: var(--text); background: var(--chip); }
-  .bar .end { margin-left: auto; display: flex; align-items: center; gap: 6px; }
-  .icon { display: inline-grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 999px; background: none; color: var(--text); }
-  .icon:hover { background: var(--chip); } .icon svg { width: 16px; height: 16px; }
-
+     beside it in library/. ?local frames the sets from _sets/. The page that lists the sets themselves is sets/.
+     The colours and the top bar are shared with that page: site.css and site.js. */
   /* grid view */
   .wrap { max-width: 1440px; margin: 0 auto; padding: 0 max(16px, env(safe-area-inset-left)) 96px; }
   .head { padding-top: 40px; display: flex; align-items: end; justify-content: space-between; gap: 16px; }
@@ -122,7 +101,7 @@
     .acts .right { margin-left: 0; width: 100%; }
   }
   @media (max-width: 600px) {
-    .bar nav { display: none; } .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .grid { grid-template-columns: 1fr 1fr; gap: 10px; }
     .meta { padding: 9px 11px 10px; } .meta .set span { display: none; } .open { display: none; }
     .search { max-width: none; } .row2 { flex-wrap: wrap; } .stage { min-height: 300px; padding: 20px 8px; }
   }
@@ -131,14 +110,7 @@
 </style>
 </head>
 <body>
-<header class="bar" id="bar">
-  <a class="brand" href="#/" aria-label="finktheartist's UI Library, all controls"><i aria-hidden="true"><b style="background:#000;outline:1px solid #555"></b><b style="background:#ecd7ac"></b><b style="background:#fff"></b><b style="background:#efe6d2"></b></i>finktheartist's <span>UI Library</span></a>
-  <nav><a href="#/" id="nav-lib">Library</a><a href="sets/" id="nav-sets">Sets</a><a href="https://github.com/finktheartist" target="_blank" rel="noopener">GitHub</a></nav>
-  <div class="end">
-    <button class="icon" id="motion" type="button" aria-pressed="false" aria-label="Pause the card loops" title="Pause the card loops"></button>
-    <button class="icon" id="theme" type="button" aria-label="Switch light and dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></button>
-  </div>
-</header>
+<header class="bar" id="bar" data-page="library" data-root="./"></header>
 
 <div id="lib" class="wrap" hidden>
   <div class="head">
@@ -162,6 +134,7 @@
 </div>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="site.js"></script>
 <script>
 const LOCAL = new URLSearchParams(location.search).has('local');
 const $ = (s, el = document) => el.querySelector(s);
@@ -173,17 +146,8 @@ const ICON = {
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>',
   ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
   gh: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .8.1-.6.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7 3.6 3.6 0 0 1 .1-2.6s.8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .4 1 .2 2 .1 2.6a3.9 3.9 0 0 1 1 2.7c0 3.9-2.3 4.7-4.6 5 .4.3.7 1 .7 1.9V21c0 .3.2.6.7.5A10 10 0 0 0 12 2Z"/></svg>',
-  pause: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>',
-  resume: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5.5v13a1 1 0 0 0 1.5.9l10.5-6.5a1 1 0 0 0 0-1.8L8.5 4.6A1 1 0 0 0 7 5.5Z"/></svg>',
   play: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>',
 };
-
-// theme: dark unless the reader picked light (remembered on this device only)
-const store = { get: (k) => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch {} } };
-const setTheme = (t) => { document.documentElement.dataset.theme = t; store.set('lib-theme', t); };
-setTheme(store.get('lib-theme') || 'dark');
-$('#theme').onclick = () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
-addEventListener('scroll', () => $('#bar').classList.toggle('scrolled', scrollY > 4), { passive: true });
 
 let SETS = {}, ALL = [];
 const state = { kind: 'All', set: 'All', q: '' };
@@ -200,24 +164,6 @@ async function copy(text, label) {
   catch { const ta = Object.assign(document.createElement('textarea'), { value: text }); document.body.append(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
   toast(`${label} copied`);
 }
-
-// ---------- loops ----------
-// Each card plays a short recording of its control being used, while at least half of it is on screen. They start paused
-// for anyone who asks for reduced motion, and the pause button in the bar stops them all (remembered on this device).
-const reduce = matchMedia('(prefers-reduced-motion: reduce)');
-let paused = store.get('lib-loops') ? store.get('lib-loops') === 'off' : reduce.matches;
-const loops = new IntersectionObserver((es) => es.forEach((e) => { e.target._seen = e.isIntersecting; playLoop(e.target); }), { threshold: .5 });
-function playLoop(v) {
-  if (v._seen && !paused) { if (v.preload !== 'auto') v.preload = 'auto'; v.play().then(() => v.classList.add('on')).catch(() => {}); }
-  else v.pause();
-}
-function setPaused(p, save) {
-  paused = p; if (save) store.set('lib-loops', p ? 'off' : 'on');
-  const b = $('#motion'); b.innerHTML = p ? ICON.resume : ICON.pause; b.setAttribute('aria-pressed', p);
-  b.title = b.ariaLabel = p ? 'Play the card loops' : 'Pause the card loops';
-  document.querySelectorAll('#grid video').forEach(playLoop);
-}
-$('#motion').onclick = () => setPaused(!paused, true);
 
 // ---------- grid ----------
 function filtered() {
@@ -236,13 +182,13 @@ function renderGrid() {
   const list = filtered(), grid = $('#grid');
   $('#count').textContent = list.length;
   $('#empty').hidden = list.length > 0;
-  loops.disconnect();
+  Site.clear();
   grid.innerHTML = list.map((c) => `<article class="card" data-id="${c.id}" style="--paper:${c.size?.bg || SETS[c.set].paper}">
     <div class="view"><img src="${thumb(c)}" alt="" loading="lazy" decoding="async">${c.loop ? `<video src="library/loops/${c.set}--${c.name}.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>` : ''}<span class="live-tag">Live</span></div>
     <a class="open" href="${href(c)}" tabindex="-1">Open ${ICON.right.replace('<svg', '<svg width="13" height="13"')}</a>
     <div class="meta"><h3><a href="${href(c)}">${esc(c.title)}</a></h3><span class="set"><span class="dot" style="background:${SETS[c.set].paper}"></span><span>${esc(SETS[c.set].name)}</span></span></div>
   </article>`).join('');
-  grid.querySelectorAll('video').forEach((v) => loops.observe(v));
+  grid.querySelectorAll('video').forEach((v) => Site.loop(v)); // each card's recording plays while it is on screen (site.js)
 }
 $('#kinds').onclick = (e) => { const b = e.target.closest('[data-kind]'); if (b) { state.kind = b.dataset.kind; renderGrid(); } };
 $('#sets').onclick = (e) => { const b = e.target.closest('[data-set]'); if (b) { state.set = b.dataset.set; renderGrid(); } };
@@ -267,12 +213,12 @@ function goLive(card) {
   const f = Object.assign(document.createElement('iframe'), { src: demoUrl(c), title: `${c.title}, live` });
   f.onload = () => { f.classList.add('ready'); $('img', view).classList.add('gone'); };
   view.append(f); view.classList.add('live'); fitFrame(f, view, c);
-  $('video', view)?.pause();
+  const v = $('video', view); if (v) Site.hold(v, true);
 }
 function sleep(card) {
   if (!card) return;
   const view = $('.view', card); view?.classList.remove('live'); $('iframe', view)?.remove(); $('img', view)?.classList.remove('gone');
-  const v = $('video', view); if (v) playLoop(v);
+  const v = $('video', view); if (v) Site.hold(v, false);
   if (liveCard === card) liveCard = null;
 }
 $('#grid').addEventListener('pointerover', (e) => {
@@ -360,6 +306,9 @@ addEventListener('resize', () => { if (!$('#doc').hidden) renderDoc.fit?.(); });
 let lastGridY = 0;
 function route() {
   const id = location.hash.replace(/^#\/?/, ''), c = ALL.find((x) => x.id === id);
+  // #/?set=ID opens the grid showing one set (the sets page links here)
+  const only = id.match(/^\?set=([\w-]+)/)?.[1];
+  if (only && SETS[only]) { Object.assign(state, { set: only, kind: 'All', q: '' }); $('#q').value = ''; history.replaceState(null, '', location.pathname + location.search + '#/'); }
   const toDoc = !!c, wasGrid = !$('#lib').hidden;
   if (toDoc && wasGrid) lastGridY = scrollY;
   sleep(liveCard);
@@ -379,10 +328,8 @@ addEventListener('keydown', (e) => {
   }
 });
 
-setPaused(paused);
 fetch('library/components.json').then((r) => r.json()).then((d) => {
   SETS = Object.fromEntries(d.sets.map((s) => [s.id, s])); ALL = d.components;
-  if (LOCAL) document.querySelectorAll('a[href="sets/"]').forEach((a) => (a.href = 'sets/?local'));
   route();
 });
 </script>
