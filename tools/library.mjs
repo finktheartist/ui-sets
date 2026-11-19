@@ -6,16 +6,16 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const KIND = {
   // what a control is for, which is how the library is filtered
-  Buttons: ['button', 'launch', 'hoard', 'raven'],
+  Buttons: ['button', 'launch', 'hoard', 'raven', 'plunger', 'drain', 'bumper'],
   Inputs: ['input', 'slider', 'dial', 'keep', 'stepper'],
-  Selection: ['toggle', 'checkbox', 'radio', 'rating', 'lock', 'mode', 'checklist'],
+  Selection: ['toggle', 'checkbox', 'radio', 'rating', 'lock', 'mode', 'checklist', 'targets'],
   Navigation: ['tabs'],
   Loading: ['progress', 'loading', 'round', 'sigil'],
   Feedback: ['toast', 'tooltip', 'alert'],
   Status: ['agent', 'sage'],
 };
 const kindOf = (name) => Object.keys(KIND).find((k) => KIND[k].includes(name)) || 'Other';
-const PREFIX = { 'sakuga-vfx': 'Sakuga ', 'rubber-hose-ui': 'Rubber Hose ', 'cockpit-ui': 'Cockpit UI ' };
+const PREFIX = { 'sakuga-vfx': 'Sakuga ', 'rubber-hose-ui': 'Rubber Hose ', 'cockpit-ui': 'Cockpit UI ', 'pinball-ui': 'Pinball UI ' };
 
 const sets = JSON.parse(readFileSync('sets.json', 'utf8')).sets.filter((s) => s.status === 'live');
 const sizes = existsSync('library/sizes.json') ? JSON.parse(readFileSync('library/sizes.json', 'utf8')) : {};

@@ -1,6 +1,39 @@
 {
   "sets": [
     {
+      "id": "pinball-ui",
+      "name": "Pinball UI",
+      "tagline": "Ordinary controls as real pinball parts. A switch whose knob is a chrome ball kicked onto a lamp, a send button you pull back like a shooter rod, delete as the drain with SHOOT AGAIN to undo.",
+      "count": 7,
+      "made": "Photographed parts, a live chrome ball, recorded sounds",
+      "url": "https://pinball-ui.vercel.app",
+      "repo": "finktheartist/pinball-ui",
+      "status": "live",
+      "paper": "#f3efe5",
+      "demos": [
+        {
+          "name": "Toggle",
+          "path": "toggle/",
+          "height": 251
+        },
+        {
+          "name": "Plunger",
+          "path": "plunger/",
+          "height": 203
+        },
+        {
+          "name": "Drain",
+          "path": "drain/",
+          "height": 331
+        },
+        {
+          "name": "Drop targets",
+          "path": "targets/",
+          "height": 291
+        }
+      ]
+    },
+    {
       "id": "cockpit-ui",
       "name": "Cockpit UI",
       "tagline": "Ordinary controls as the cockpit of a 1990s giant-robot anime. A confirm button you hold until the robot launches, a slider that is a dial, an AI agent's status as a turning hologram.",

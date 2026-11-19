@@ -37,6 +37,13 @@ async function feed(p, js, ms) { // drive a progress control from 0 to 1 over ms
 
 // what each control's loop does, after a short beat at rest
 const PLAY = {
+  'pinball-ui/toggle': async (p) => { await click(p, 'pinball-toggle >> button'); await wait(p, 1700); await click(p, 'pinball-toggle >> button'); await wait(p, 1700); },
+  'pinball-ui/slider': async (p) => { await drag(p, 'pinball-slider >> [role=slider]', 0.4, 0.95, 900); await wait(p, 900); await drag(p, 'pinball-slider >> [role=slider]', 0.95, 0.2, 900); await wait(p, 900); },
+  'pinball-ui/plunger': async (p) => { await drag(p, 'pinball-plunger >> button', 0.82, 1.25, 500); await wait(p, 100); await call(p, () => document.querySelector('pinball-plunger').fire()); await wait(p, 2200); },
+  'pinball-ui/stepper': async (p) => { for (let i = 0; i < 4; i++) { await click(p, 'pinball-stepper >> .plus'); await wait(p, 380); } await click(p, 'pinball-stepper >> .minus'); await wait(p, 1400); },
+  'pinball-ui/targets': async (p) => { for (const i of [1, 3]) { await click(p, 'pinball-targets >> [role=checkbox]', i); await wait(p, 900); } await wait(p, 1400); },
+  'pinball-ui/drain': async (p) => { await click(p, 'pinball-drain >> .chute'); await wait(p, 1500); await click(p, 'pinball-drain >> .shoot'); await wait(p, 1800); },
+  'pinball-ui/bumper': async (p) => { await click(p, 'pinball-bumpers >> [role=button]'); await wait(p, 500); await click(p, 'pinball-bumpers >> [role=button]'); await wait(p, 2600); },
   'cockpit-ui/launch': async (p) => { await click(p, 'cockpit-launch >> [role=switch]'); await wait(p, 700); await press(p, 'cockpit-launch >> button:not([role])', 3600); await wait(p, 2600); },
   'cockpit-ui/dial': async (p) => { await keys(p, 'cockpit-dial >> [role=slider]', 'ArrowUp', 82, 50); await wait(p, 3000); },
   'cockpit-ui/checklist': async (p) => { for (let i = 0; i < 4; i++) { await click(p, 'cockpit-checklist >> [role=checkbox]', i); await wait(p, 650); } await wait(p, 2400); },

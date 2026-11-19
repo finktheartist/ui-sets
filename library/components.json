@@ -1,6 +1,15 @@
 {
  "sets": [
   {
+   "id": "pinball-ui",
+   "name": "Pinball UI",
+   "url": "https://pinball-ui.vercel.app",
+   "repo": "finktheartist/pinball-ui",
+   "paper": "#f3efe5",
+   "made": "Photographed parts, a live chrome ball, recorded sounds",
+   "tagline": "Ordinary controls as real pinball parts. A switch whose knob is a chrome ball kicked onto a lamp, a send button you pull back like a shooter rod, delete as the drain with SHOOT AGAIN to undo."
+  },
+  {
    "id": "cockpit-ui",
    "name": "Cockpit UI",
    "url": "https://cockpit-ui-kit.vercel.app",
@@ -38,6 +47,188 @@
   }
  ],
  "components": [
+  {
+   "id": "pinball-ui/toggle",
+   "set": "pinball-ui",
+   "name": "toggle",
+   "title": "Toggle",
+   "kind": "Selection",
+   "description": "A switch whose knob is a chrome pinball in a short lane. Flip it and the ball is kicked across, hits the far wall, rocks in its seat and settles, and the lamp under the on end lights.",
+   "docs": "Pinball UI Toggle is a plain script that registers a custom element. Load /pinball-ui/toggle.js with a script tag (not a module), then use <pinball-toggle></pinball-toggle>. Read el.checked and listen for change. Works in forms with a name, like a checkbox. Size it with --pb-size.",
+   "tag": "pinball-toggle",
+   "file": "toggle/toggle.js",
+   "demo": "toggle/",
+   "script": "/pinball-ui/toggle.js",
+   "install": "npx shadcn add finktheartist/pinball-ui/toggle",
+   "size": {
+    "w": 640,
+    "h": 251,
+    "box": [
+     108,
+     0,
+     424,
+     251
+    ],
+    "bg": "rgb(243, 239, 229)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pinball-ui/slider",
+   "set": "pinball-ui",
+   "name": "slider",
+   "title": "Slider",
+   "kind": "Inputs",
+   "description": "A slider whose thumb is a chrome pinball rolling along a lane of ten lamps. Each lamp lights as the ball reaches it and goes out as the ball rolls back past it, so the lit lamps are the filled part of the track.",
+   "docs": "Pinball UI Slider is a plain script that registers a custom element. Load /pinball-ui/slider.js with a script tag (not a module), then use <pinball-slider value=\"40\" min=\"0\" max=\"100\"></pinball-slider>. Read el.value; it fires input while it moves and change when let go. Works in forms with a name. Size it with --pb-size.",
+   "tag": "pinball-slider",
+   "file": "slider/slider.js",
+   "demo": "slider/",
+   "script": "/pinball-ui/slider.js",
+   "install": "npx shadcn add finktheartist/pinball-ui/slider",
+   "size": {
+    "w": 640,
+    "h": 207,
+    "box": [
+     66,
+     0,
+     508,
+     207
+    ],
+    "bg": "rgb(243, 239, 229)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pinball-ui/plunger",
+   "set": "pinball-ui",
+   "name": "plunger",
+   "title": "Plunger",
+   "kind": "Buttons",
+   "description": "A send button you pull. It is a bare pinball shooter rod: knob, rod, spring and rubber tip. Pull the knob all the way back and a ball drops in front of the tip; let go and the plunger knocks the ball off the edge of the screen and fires send.",
+   "docs": "Pinball UI Plunger is a plain script that registers a custom element. Load /pinball-ui/plunger.js with a script tag (not a module), then use <pinball-plunger label=\"Send\"></pinball-plunger>. Listen for send; el.fire() does a full pull for you. Size it with --pb-size.",
+   "tag": "pinball-plunger",
+   "file": "plunger/plunger.js",
+   "demo": "plunger/",
+   "script": "/pinball-ui/plunger.js",
+   "install": "npx shadcn add finktheartist/pinball-ui/plunger",
+   "size": {
+    "w": 640,
+    "h": 203,
+    "box": [
+     117,
+     0,
+     407,
+     203
+    ],
+    "bg": "rgb(243, 239, 229)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pinball-ui/stepper",
+   "set": "pinball-ui",
+   "name": "stepper",
+   "title": "Stepper",
+   "kind": "Inputs",
+   "description": "A number stepper made of two pinball flippers either side of a two-digit score reel. Press a flipper and it snaps up, the lamp flashes and the drums roll to the new number, carrying into the tens like an old score counter.",
+   "docs": "Pinball UI Stepper is a plain script that registers a custom element. Load /pinball-ui/stepper.js with a script tag (not a module), then use <pinball-stepper value=\"4\" min=\"0\" max=\"99\"></pinball-stepper>. Read el.value; it fires input and change. Works in forms with a name. Size it with --pb-size.",
+   "tag": "pinball-stepper",
+   "file": "stepper/stepper.js",
+   "demo": "stepper/",
+   "script": "/pinball-ui/stepper.js",
+   "install": "npx shadcn add finktheartist/pinball-ui/stepper",
+   "size": {
+    "w": 640,
+    "h": 239,
+    "box": [
+     89,
+     0,
+     462,
+     239
+    ],
+    "bg": "rgb(243, 239, 229)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pinball-ui/targets",
+   "set": "pinball-ui",
+   "name": "targets",
+   "title": "Drop targets",
+   "kind": "Selection",
+   "description": "A row of up to four checkboxes as a bank of pinball drop targets with your labels printed on them. Tick one and a ball rolls in, knocks its target down and lights its lamp; untick it and the target springs back up. Knock all four down for a bonus chime.",
+   "docs": "Pinball UI Drop targets is a plain script that registers a custom element. Load /pinball-ui/targets.js with a script tag (not a module), then use <pinball-targets items=\"EMAIL,PUSH,TEXT,CALLS\" checked=\"0,2\"></pinball-targets>. Read el.selected (the ticked items) or el.checked (an array of booleans); it fires change and, when all are ticked, bonus. Works in forms with a name. Size it with --pb-size.",
+   "tag": "pinball-targets",
+   "file": "targets/targets.js",
+   "demo": "targets/",
+   "script": "/pinball-ui/targets.js",
+   "install": "npx shadcn add finktheartist/pinball-ui/targets",
+   "size": {
+    "w": 640,
+    "h": 291,
+    "box": [
+     110,
+     0,
+     420,
+     291
+    ],
+    "bg": "rgb(243, 239, 229)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pinball-ui/drain",
+   "set": "pinball-ui",
+   "name": "drain",
+   "title": "Drain",
+   "kind": "Buttons",
+   "description": "A delete button with an undo window, built from a pinball outhole and a SHOOT AGAIN lamp. Press or drag the ball into the drain to delete; SHOOT AGAIN blinks while you can still undo, and pressing it kicks the ball back out.",
+   "docs": "Pinball UI Drain is a plain script that registers a custom element. Load /pinball-ui/drain.js with a script tag (not a module), then use <pinball-drain window=\"6000\" label=\"Delete draft\"></pinball-drain>. Listen for delete, undo and commit (the delete is final); el.reset() serves a new ball. Size it with --pb-size.",
+   "tag": "pinball-drain",
+   "file": "drain/drain.js",
+   "demo": "drain/",
+   "script": "/pinball-ui/drain.js",
+   "install": "npx shadcn add finktheartist/pinball-ui/drain",
+   "size": {
+    "w": 640,
+    "h": 331,
+    "box": [
+     104,
+     0,
+     432,
+     331
+    ],
+    "bg": "rgb(243, 239, 229)"
+   },
+   "loop": true
+  },
+  {
+   "id": "pinball-ui/bumper",
+   "set": "pinball-ui",
+   "name": "bumper",
+   "title": "Pop bumpers",
+   "kind": "Buttons",
+   "description": "Pinball pop bumpers as buttons.",
+   "docs": "Pinball UI Pop bumpers is a plain script that registers a custom element. Load /pinball-ui/bumper.js with a script tag (not a module), then use <pinball-bumper cap=\"+1\"></pinball-bumper> for one button, or <pinball-bumpers caps=\"100,500,100\"></pinball-bumpers> for the cluster. Both fire hit with { points, score, combo }. Size it with --pb-size.",
+   "tag": "pinball-bumper",
+   "file": "bumper/bumper.js",
+   "demo": "bumper/",
+   "script": "/pinball-ui/bumper.js",
+   "install": "npx shadcn add finktheartist/pinball-ui/bumper",
+   "size": {
+    "w": 640,
+    "h": 411,
+    "box": [
+     52,
+     0,
+     537,
+     411
+    ],
+    "bg": "rgb(243, 239, 229)"
+   },
+   "loop": true
+  },
   {
    "id": "cockpit-ui/launch",
    "set": "cockpit-ui",
