@@ -1,6 +1,15 @@
 {
  "sets": [
   {
+   "id": "zen-sand-ui",
+   "name": "Zen Sand UI",
+   "url": "https://zen-sand-ui.vercel.app",
+   "repo": "finktheartist/zen-sand-ui",
+   "paper": "#e9e4da",
+   "made": "A sand simulation lit on the GPU, recorded sounds",
+   "tagline": "Ordinary controls made of simulated sand that moves like sand. A slider that is a rake, a toggle stone that uncovers a symbol it was hiding, a signature pad you write in with a stick, and an AI thinking state that rakes a different line for each thing the agent does."
+  },
+  {
    "id": "pinball-ui",
    "name": "Pinball UI",
    "url": "https://pinball-ui.vercel.app",
@@ -47,6 +56,110 @@
   }
  ],
  "components": [
+  {
+   "id": "zen-sand-ui/slider",
+   "set": "zen-sand-ui",
+   "name": "slider",
+   "title": "Slider",
+   "kind": "Inputs",
+   "description": "A slider that is a bamboo rake in a tray of sand. Drag right and its four tines cut grooves and push a little heap of sand ahead of it; pull back and its back drags the sand flat again.",
+   "docs": "Zen Sand Slider is a plain script that registers a custom element. Load /zen-sand-ui/slider.js with a script tag (not a module), then use <sand-slider value=\"40\" label=\"Volume\"></sand-slider>. Read el.value; it fires input while it moves and change when it comes to rest. min, max and step work; with a name it is sent with its form.",
+   "tag": "sand-slider",
+   "file": "slider/slider.js",
+   "demo": "slider/",
+   "script": "/zen-sand-ui/slider.js",
+   "install": "npx shadcn add finktheartist/zen-sand-ui/slider",
+   "size": {
+    "w": 640,
+    "h": 208,
+    "box": [
+     4,
+     0,
+     632,
+     208
+    ],
+    "bg": "rgb(233, 228, 218)"
+   },
+   "loop": true
+  },
+  {
+   "id": "zen-sand-ui/toggle",
+   "set": "zen-sand-ui",
+   "name": "toggle",
+   "title": "Toggle",
+   "kind": "Selection",
+   "description": "A switch that is a river stone in a tray of raked sand. Switch it on and the stone glides along, parting the sand into a wake, and uncovers a power symbol it had pressed into the sand where it was resting.",
+   "docs": "Zen Sand Toggle is a plain script that registers a custom element. Load /zen-sand-ui/toggle.js with a script tag (not a module), then use <sand-toggle label=\"Focus mode\"></sand-toggle>. Read el.checked and listen for change. Works in forms with a name.",
+   "tag": "sand-toggle",
+   "file": "toggle/toggle.js",
+   "demo": "toggle/",
+   "script": "/zen-sand-ui/toggle.js",
+   "install": "npx shadcn add finktheartist/zen-sand-ui/toggle",
+   "size": {
+    "w": 640,
+    "h": 193,
+    "box": [
+     4,
+     0,
+     632,
+     193
+    ],
+    "bg": "rgb(233, 228, 218)"
+   },
+   "loop": true
+  },
+  {
+   "id": "zen-sand-ui/signature",
+   "set": "zen-sand-ui",
+   "name": "signature",
+   "title": "Signature",
+   "kind": "Inputs",
+   "description": "A signature pad of smoothed sand, written in with a stick that cuts like a brush: linger and the line is wide and deep, hurry and it thins. The sand heaps up along the line. Clear sends a rake across that smooths it all away.",
+   "docs": "Zen Sand Signature is a plain script that registers a custom element. Load /zen-sand-ui/signature.js with a script tag (not a module), then use <sand-signature name=\"signature\"></sand-signature>. el.empty, el.undo(), el.clear() and el.toDataURL() give you the signature as ink on a transparent PNG; it fires input after each stroke. With a name its form gets the PNG.",
+   "tag": "sand-signature",
+   "file": "signature/signature.js",
+   "demo": "signature/",
+   "script": "/zen-sand-ui/signature.js",
+   "install": "npx shadcn add finktheartist/zen-sand-ui/signature",
+   "size": {
+    "w": 640,
+    "h": 344,
+    "box": [
+     4,
+     0,
+     632,
+     344
+    ],
+    "bg": "rgb(233, 228, 218)"
+   },
+   "loop": true
+  },
+  {
+   "id": "zen-sand-ui/thinking",
+   "set": "zen-sand-ui",
+   "name": "thinking",
+   "title": "Thinking",
+   "kind": "Status",
+   "description": "An AI agent's working state as a rock in a round tray of sand that rakes itself. Thinking draws rings round the rock, searching draws spokes, using a tool draws lines that flow round it like water, and writing draws dashes like lines of text.",
+   "docs": "Zen Sand Thinking is a plain script that registers a custom element. Load /zen-sand-ui/thinking.js with a script tag (not a module), then use <sand-thinking state=\"thinking\"></sand-thinking> and set el.state to thinking, searching, tool, writing or idle as your agent works. It is a status region, so the state is read out.",
+   "tag": "sand-thinking",
+   "file": "thinking/thinking.js",
+   "demo": "thinking/",
+   "script": "/zen-sand-ui/thinking.js",
+   "install": "npx shadcn add finktheartist/zen-sand-ui/thinking",
+   "size": {
+    "w": 640,
+    "h": 429,
+    "box": [
+     55,
+     0,
+     531,
+     429
+    ],
+    "bg": "rgb(233, 228, 218)"
+   },
+   "loop": true
+  },
   {
    "id": "pinball-ui/toggle",
    "set": "pinball-ui",

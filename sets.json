@@ -1,6 +1,51 @@
 {
   "sets": [
     {
+      "id": "zen-sand-ui",
+      "name": "Zen Sand UI",
+      "tagline": "Ordinary controls made of simulated sand that moves like sand. A slider that is a rake, a toggle stone that uncovers a symbol it was hiding, a signature pad you write in with a stick, and an AI thinking state that rakes a different line for each thing the agent does.",
+      "count": 4,
+      "made": "A sand simulation lit on the GPU, recorded sounds",
+      "url": "https://zen-sand-ui.vercel.app",
+      "repo": "finktheartist/zen-sand-ui",
+      "status": "live",
+      "paper": "#e9e4da",
+      "demos": [
+        {
+          "name": "Thinking",
+          "path": "thinking/",
+          "height": [
+            429,
+            397
+          ]
+        },
+        {
+          "name": "Slider",
+          "path": "slider/",
+          "height": [
+            194,
+            158
+          ]
+        },
+        {
+          "name": "Toggle",
+          "path": "toggle/",
+          "height": [
+            193,
+            177
+          ]
+        },
+        {
+          "name": "Signature",
+          "path": "signature/",
+          "height": [
+            314,
+            238
+          ]
+        }
+      ]
+    },
+    {
       "id": "pinball-ui",
       "name": "Pinball UI",
       "tagline": "Ordinary controls as real pinball parts. A switch whose knob is a chrome ball kicked onto a lamp, a send button you pull back like a shooter rod, delete as the drain with SHOOT AGAIN to undo.",

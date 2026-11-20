@@ -37,6 +37,14 @@ async function feed(p, js, ms) { // drive a progress control from 0 to 1 over ms
 
 // what each control's loop does, after a short beat at rest
 const PLAY = {
+  'zen-sand-ui/slider': async (p) => { await drag(p, 'sand-slider', 0.42, 0.88, 1300); await wait(p, 700); await drag(p, 'sand-slider', 0.88, 0.3, 1100); await wait(p, 900); },
+  'zen-sand-ui/toggle': async (p) => { await click(p, 'sand-toggle'); await wait(p, 2200); await click(p, 'sand-toggle'); await wait(p, 2000); },
+  'zen-sand-ui/signature': async (p) => { // a loopy signature, written with the mouse
+    const [, , b] = await center(p, 'sand-signature'); const pt = (u) => { const a = u * 5.2 * Math.PI; return [b.x + b.width * (0.17 + u * 0.56 - 0.075 * Math.sin(a)), b.y + b.height * (0.5 - 0.16 * Math.cos(a) + 0.04 * u)]; };
+    let [x, y] = pt(0); await p.mouse.move(x, y, { steps: 8 }); await p.mouse.down();
+    for (let i = 1; i <= 90; i++) { [x, y] = pt(i / 90); await p.mouse.move(x, y); await wait(p, 18); }
+    await p.mouse.up(); await wait(p, 1500); },
+  'zen-sand-ui/thinking': async (p) => { await wait(p, 4500); await click(p, '#states [data-s=searching]'); await wait(p, 5000); },
   'pinball-ui/toggle': async (p) => { await click(p, 'pinball-toggle >> button'); await wait(p, 1700); await click(p, 'pinball-toggle >> button'); await wait(p, 1700); },
   'pinball-ui/slider': async (p) => { await drag(p, 'pinball-slider >> [role=slider]', 0.4, 0.95, 900); await wait(p, 900); await drag(p, 'pinball-slider >> [role=slider]', 0.95, 0.2, 900); await wait(p, 900); },
   'pinball-ui/plunger': async (p) => { await drag(p, 'pinball-plunger >> button', 0.82, 1.25, 500); await wait(p, 100); await call(p, () => document.querySelector('pinball-plunger').fire()); await wait(p, 2200); },
